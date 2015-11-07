@@ -11,10 +11,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151107175553) do
+ActiveRecord::Schema.define(version: 20151107184230) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "concepts", force: :cascade do |t|
+    t.integer "concept_type", null: false
+    t.string  "title",        null: false
+    t.string  "description",  null: false
+  end
+
+  add_index "concepts", ["concept_type", "title", "description"], name: "index_concepts_on_concept_type_and_title_and_description", unique: true, using: :btree
+
+  create_table "sections", force: :cascade do |t|
+    t.string  "title",   null: false
+    t.integer "word_id", null: false
+  end
+
+  add_index "sections", ["title"], name: "index_sections_on_title", unique: true, using: :btree
+  add_index "sections", ["word_id"], name: "index_sections_on_word_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -34,4 +50,26 @@ ActiveRecord::Schema.define(version: 20151107175553) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
+  create_table "word_groups", force: :cascade do |t|
+    t.integer "starting_word_id", null: false
+    t.integer "ending_word_id",   null: false
+  end
+
+  add_index "word_groups", ["ending_word_id"], name: "index_word_groups_on_ending_word_id", using: :btree
+  add_index "word_groups", ["starting_word_id", "ending_word_id"], name: "index_word_groups_on_starting_word_id_and_ending_word_id", unique: true, using: :btree
+  add_index "word_groups", ["starting_word_id"], name: "index_word_groups_on_starting_word_id", using: :btree
+
+  create_table "words", force: :cascade do |t|
+    t.string  "word",                                                             null: false
+    t.integer "word_index", default: "nextval('words_word_index_seq'::regclass)", null: false
+    t.integer "concept_id"
+  end
+
+  add_index "words", ["concept_id"], name: "index_words_on_concept_id", using: :btree
+  add_index "words", ["word_index"], name: "index_words_on_word_index", unique: true, using: :btree
+
+  add_foreign_key "sections", "words"
+  add_foreign_key "word_groups", "words", column: "ending_word_id", name: "fk_word_groups_words_end"
+  add_foreign_key "word_groups", "words", column: "starting_word_id", name: "fk_word_groups_words_start"
+  add_foreign_key "words", "concepts"
 end
