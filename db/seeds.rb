@@ -17,3 +17,34 @@ users = [
 end
 User.create(users)
 
+# Load the concepts json file
+concepts = JSON.parse IO.read(Rails.root.join('db/seeds/concepts.json'))
+concepts.each do |concept_hash|
+  concept = Concept.from_hash(concept_hash)
+  if concept.valid?
+    concept.save!
+  else
+    puts "Got errors for concept #{concept.inspect}..."
+    concept.errors.full_messages.each do |m|
+      puts " - #{m}"
+    end
+  end
+end
+
+# Load sections and words
+sections = JSON.parse IO.read(Rails.root.join('db/seeds/ruth1.json'))
+sections.each do |section_hash|
+  word_hashes = section_hash["constituents"].map {|word| { word: word } }
+  words       = Word.create!(word_hashes)
+  section     = Section.create({
+    word: words.first,
+    title: section_hash["reference"],
+  })
+  unless section.valid?
+    puts "Got errors for section #{section.inspect}..."
+    concept.errors.full_messages.each do |m|
+      puts " - #{m}"
+    end
+  end
+end
+
