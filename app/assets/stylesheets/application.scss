@@ -17,8 +17,12 @@
 @import "bootstrap";
 @import "bootswatch/darkly/bootswatch";
 
-body {
+body.layout-jumbotron {
   padding-top: 50px;
   padding-bottom: 20px;
+}
+
+body {
+  padding-top: 75px;
 }
 
