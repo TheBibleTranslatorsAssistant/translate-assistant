@@ -5,7 +5,9 @@
     <span class="icon-bar"></span>
     <span class="icon-bar"></span>
   </button>
-  <a class="navbar-brand" href="/"><img src="/assets/BTA-Logo.png" class="img-responsive"></a>
+  <%= link_to root_path, class: "navbar-brand" do %>
+    <%= image_tag("BTA-Logo.png", class: "img-responsive") %>
+  <% end %>
 </div>
 
 <div id="navbar" class="collapse navbar-collapse">
