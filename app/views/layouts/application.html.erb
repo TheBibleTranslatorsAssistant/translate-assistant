@@ -50,11 +50,24 @@
             <li><a href="#about">About</a></li>
             <li><a href="#contact">Contact</a></li>
           </ul>
+
+          <ul class="nav navbar-nav navbar-right">
+            <li>
+              <% if user_signed_in? %>
+                <%= link_to "Sign Out", destroy_user_session_path, method: :delete %>
+              <% else %>
+                <%= link_to "Sign In", new_user_session_path %>
+              <% end %>
+            </li>
+          </ul>
         </div><!--/.nav-collapse -->
       </div>
     </nav>
 
     <div class="container">
+      <p class="notice"><%= notice %></p>
+      <p class="alert"><%= alert %></p>
+
       <%= yield %>
     </div><!-- /.container -->
   </body>

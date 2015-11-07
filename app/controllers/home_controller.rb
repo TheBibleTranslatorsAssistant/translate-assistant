@@ -4,5 +4,8 @@ class HomeController < ApplicationController
     render :index, layout: 'jumbotron'
   end
 
+  def translate
+  end
+
 end
 

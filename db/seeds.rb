@@ -5,3 +5,14 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+
+users = [
+  'ardell@gmail.com',
+].map do |email|
+  {
+    email: email,
+    password: '12345678',
+  }
+end
+User.create(users)
+

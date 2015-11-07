@@ -35,15 +35,15 @@
           <a class="navbar-brand" href="#">Translate Assistant</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
-          <form class="navbar-form navbar-right">
-            <div class="form-group">
-              <input type="text" placeholder="Email" class="form-control">
-            </div>
-            <div class="form-group">
-              <input type="password" placeholder="Password" class="form-control">
-            </div>
-            <button type="submit" class="btn btn-success">Sign in</button>
-          </form>
+          <ul class="nav navbar-nav navbar-right">
+            <li>
+              <% if user_signed_in? %>
+                <%= link_to "Sign Out", destroy_user_session_path, method: :delete %>
+              <% else %>
+                <%= link_to "Sign In", new_user_session_path %>
+              <% end %>
+            </li>
+          </ul>
         </div><!--/.navbar-collapse -->
       </div>
     </nav>
@@ -51,6 +51,9 @@
     <!-- Main jumbotron for a primary marketing message or call to action -->
     <div class="jumbotron">
       <div class="container">
+        <p class="notice"><%= notice %></p>
+        <p class="alert"><%= alert %></p>
+
         <%= yield %>
       </div>
     </div>
