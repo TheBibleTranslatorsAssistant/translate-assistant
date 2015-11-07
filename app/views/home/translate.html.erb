@@ -1,8 +1,14 @@
 <div ng-app="translateAssistant">
-  <h1>Hello, world!</h1>
-  <div ng-controller="TranslateController">
-    <input type="text" ng-model="foo">
-    {{foo}}
+  <div ng-controller="TranslateController" style="font-size: 32pt;">
+    <div class="source-text" style="height: 400px" ng-mouseup="clearHighlight()">
+      <span ng-repeat="word in words"
+            ng-class="{ 'selection-disabled': true, 'highlighted': indexIsHighlighted($index) }" 
+            ng-mousedown="startWith(word, $event)"
+            ng-mousemove="endWith(word, $event)"
+            ng-mouseup="stopPropagation($event)">
+        {{word.word}}
+      </span>
+    </div>
   </div>
 </div>
 
