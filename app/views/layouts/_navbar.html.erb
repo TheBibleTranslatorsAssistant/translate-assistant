@@ -9,20 +9,28 @@
 </div>
 
 <div id="navbar" class="collapse navbar-collapse">
-  <ul class="nav navbar-nav">
-    <li class="active"><a href="/">Home</a></li>
-    <li><a href="/about">About</a></li>
-    <li><a href="/contact">Contact</a></li>
-  </ul>
-
   <ul class="nav navbar-nav navbar-right">
-    <li>
-      <% if user_signed_in? %>
-        <%= link_to "Sign Out", destroy_user_session_path, method: :delete %>
-      <% else %>
-        <%= link_to "Sign In", new_user_session_path %>
-      <% end %>
+    <li style="margin-left: 30px;">
+      <p class="navbar-btn">
+        <%= link_to "About", about_path, class: "btn btn-warning" %>
+      </p>
     </li>
-  </ul>
+
+    <li style="margin-left: 30px;">
+      <p class="navbar-btn">
+        <%= link_to "How it works", how_it_works_path, class: "btn btn-warning" %>
+      </p>
+    </li>
+
+    <li style="margin-left: 30px;">
+      <p class="navbar-btn">
+        <% if user_signed_in? %>
+          <%= link_to "Sign Out", destroy_user_session_path, method: :delete, class: 'btn btn-warning' %>
+        <% else %>
+          <%= link_to "Sign In", new_user_session_path, class: 'btn btn-warning' %>
+        <% end %>
+      </p>
+    </li>
+  </ul><!--/.navbar-nav -->
 </div><!--/.nav-collapse -->
 
