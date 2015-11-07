@@ -23,7 +23,7 @@
 
   <body class="layout-jumbotron">
 
-    <nav class="navbar navbar-inverse navbar-fixed-top">
+    <nav class="navbar navbar-default navbar-fixed-top">
       <div class="container">
         <%= render partial: '/layouts/navbar' %>
       </div>
@@ -41,7 +41,12 @@
 
     <div class="container">
       <footer>
-        <p>&copy; The Bible Translator's Assistant <%= Date.today.strftime("%Y") %></p>
+        <ul class="footer-list">
+          <li><span class="glyphicon glyphicon-home"></span><a href="https://goo.gl/maps/d3Mzd248Few"><span class="footer-text">3624 Texas Trail, Hurst, TX 76054</span></a></li>
+          <li><span class="glyphicon glyphicon-earphone"></span><a href="tel:3864024299"><span class="footer-text">386-402-4299</span></a></li>
+          <li><span class="glyphicon glyphicon-envelope"></span><a href="mailto:Tod.Allman@TheBibleTranslatorsAssistant.org" class="footer-text">Tod.Allman@TheBibleTranslatorsAssistant.org</span></a></li>
+        </ul>
+        <p class="copyright">&copy; The Bible Translator's Assistant <%= Date.today.strftime("%Y") %></p>
       </footer>
     </div> <!-- /container -->
   </body>

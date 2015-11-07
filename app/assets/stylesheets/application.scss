@@ -21,8 +21,51 @@ body.layout-jumbotron {
   padding-top: 50px;
   padding-bottom: 20px;
 }
-
 body {
   padding-top: 75px;
+
+}
+
+.navbar-brand {
+	padding: 2px 0;
+}
+
+.jumbotron {
+	background-image: image-url("bible-on-table.jpg");
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center center;
+	width: 100%;
+}
+
+footer {
+	text-align: center;
+}
+.footer-list {
+	list-style: none;
+	padding-left: 0;
+}
+
+.footer-list li {
+	display: inline-block;
+	margin: 0 15px;
+}
+.footer-list a {
+	display: inline-block;
+	text-decoration: none;
+	color: inherit;
+}
+.footer-text {
+	padding-left: 7px;
+}
+.copyright {
+	margin-top: 30px;
+}
+
+@media (min-width: 768px) {
+	.jumbotron {
+		width: auto;
+		min-height: 600px;
+	}
 }
 
