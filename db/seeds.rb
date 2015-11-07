@@ -8,6 +8,7 @@
 
 users = [
   'ardell@gmail.com',
+  'sackman.nicholas@gmail.com',
 ].map do |email|
   {
     email: email,
