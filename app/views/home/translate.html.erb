@@ -45,7 +45,7 @@
         <h3 class="panel-title">
           Definition
           <span class="glyphicon glyphicon-ok" ng-show="definitionIsCompleted()"></span>
-          <span class="glyphicon glyphicon-remove" ng-click="selectedWordGroup.conceptId = null"></span>
+          <span class="glyphicon glyphicon-remove" ng-show="definitionIsCompleted()" ng-click="selectedWordGroup.conceptId = null"></span>
         </h3>
         </div>
         <div class="panel-body">
@@ -71,7 +71,7 @@
         <h3 class="panel-title">
           Phrase Type
           <span class="glyphicon glyphicon-ok" ng-show="selectedWordGroup.groupType"></span>
-          <span class="glyphicon glyphicon-remove" ng-click="selectedWordGroup.groupType = null"></span>
+          <span class="glyphicon glyphicon-remove" ng-show="selectedWordGroup.groupType" ng-click="selectedWordGroup.groupType = null"></span>
         </h3>
         </div>
         <div class="panel-body">
@@ -93,7 +93,7 @@
         <h3 class="panel-title">
           Plurality
           <span class="glyphicon glyphicon-ok" ng-show="selectedWordGroup.plurality"></span>
-          <span class="glyphicon glyphicon-remove" ng-click="selectedWordGroup.plurality = null"></span>
+          <span class="glyphicon glyphicon-remove" ng-show="selectedWordGroup.plurality" ng-click="selectedWordGroup.plurality = null"></span>
         </h3>
         </div>
         <div class="panel-body">
@@ -115,7 +115,7 @@
         <h3 class="panel-title">
           Tense
           <span class="glyphicon glyphicon-ok" ng-show="selectedWordGroup.tense"></span>
-          <span class="glyphicon glyphicon-remove" ng-click="selectedWordGroup.tense = null"></span>
+          <span class="glyphicon glyphicon-remove" ng-show="selectedWordGroup.tense" ng-click="selectedWordGroup.tense = null"></span>
         </h3>
         </div>
         <div class="panel-body">
