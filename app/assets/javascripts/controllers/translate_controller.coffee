@@ -31,6 +31,28 @@ controller = ($http, $scope) ->
 
   $scope.stopPropagation = ($event) ->
     $event.stopPropagation()
+    $scope.selectionDidChange()
+
+  $scope.definitionOptions = []
+  $scope.selectionDidChange = ->
+    min = Math.min($scope.startWordIndex, $scope.endWordIndex)
+    max = Math.max($scope.startWordIndex, $scope.endWordIndex)
+
+    # If the user selected a single word then refresh definition options
+    if min == max
+      selectedWord = $scope.words[min]
+      loadDefinitionsForWord(selectedWord)
+    else
+      $scope.definitionOptions = []
+
+  loadDefinitionsForWord = (word) ->
+    console.log "fetching definitions for #{word.word}"
+    $http({
+      method: 'GET',
+      url:    '/concepts'
+      params: { q: word.word }
+    }).success (response) ->
+      $scope.definitionOptions = response
 
 angular
   .module 'translateAssistant'

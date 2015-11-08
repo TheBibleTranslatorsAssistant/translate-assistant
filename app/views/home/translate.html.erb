@@ -11,6 +11,12 @@
         {{word.word}}
       </span>
     </div>
+
+    <ul style="color: #000;">
+      <li ng-repeat="definition in definitionOptions">
+        {{definition.title}} - {{definition.description}}
+      </li>
+    </ul>
   </div>
 </div>
 
