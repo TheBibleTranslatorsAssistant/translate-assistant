@@ -8,7 +8,7 @@ directive = ($window) ->
         windowHeight = $(window).height()
 
         # Source text
-        PANEL_HEADER_HEIGHT = 75
+        PANEL_HEADER_HEIGHT = 94
         targetHeight = windowHeight - NAVBAR_HEIGHT - MARGIN_ABOVE - PANEL_HEADER_HEIGHT - MARGIN_BELOW
         $('.source-text .panel-body').height(targetHeight)
 
