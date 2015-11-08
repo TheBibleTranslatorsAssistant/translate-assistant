@@ -1,8 +1,10 @@
 Function::property = (prop, desc) ->
   Object.defineProperty @prototype, prop, desc
 
-factory = ($q, $http) ->
-  class WordGroup
+factory = ($q, $http, Module, Observable) ->
+  class WordGroup extends Module
+    @include Observable
+
     constructor: (hash) ->
       if hash
         @id               = hash.id
@@ -31,11 +33,39 @@ factory = ($q, $http) ->
           ending_word_id:   @ending_word_id
           group_type:       @groupType
       $http(request)
-        .success (data, status, headers, config) => _.extend @, data
+        .success (data, status, headers, config) =>
+          _.extend @, data
+
+          # Fetch new WordGroups from server
+          setTimeout WordGroup._fetchWordGroups, 0
         .error (data, status, headers, config) ->
           console.log "Oh no, there was an error saving the word group."
 
+    @all: ->
+      return WordGroup._allWordGroups unless angular.isUndefined(WordGroup._allWordGroups)
+
+      # If we haven't fetched before:
+      #  - set up an observer to track changes
+      #  - fetch (and return a promise)
+      WordGroup._allWordGroups = []
+      return @_fetchWordGroups()
+
+    @_fetchWordGroups: ->
+      promise = $http({
+        method: 'GET',
+        url:    '/word-groups'
+      }).success (response) =>
+        WordGroup._allWordGroups = _.map response, (wordGroupHash) ->
+          new WordGroup(wordGroupHash)
+        if WordGroup._wordGroupChangeObservers
+          for observer in WordGroup._wordGroupChangeObservers
+            observer()
+
+    @wordGroupsDidChange: (fn) ->
+      WordGroup._wordGroupChangeObservers ||= []
+      WordGroup._wordGroupChangeObservers.push(fn)
+
 angular
   .module 'translateAssistant'
-  .factory 'WordGroup', ['$q', '$http', factory]
+  .factory 'WordGroup', ['$q', '$http', 'Module', 'Observable', factory]
 

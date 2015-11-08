@@ -72,12 +72,11 @@ controller = ($http, $q, WordGroup, $scope) ->
     $scope.words = response
   
   # Load word groups from the server
-  wordGroupsPromise = $http({
-    method: 'GET',
-    url:    '/word-groups'
-  }).success (response) ->
-    $scope.wordGroups = _.map response, (wordGroupHash) ->
-      new WordGroup(wordGroupHash)
+  WordGroup.wordGroupsDidChange ->
+    $scope.wordGroups = WordGroup.all()
+    $scope.$digest() unless $scope.$$phase
+    recalculateUnderlines()
+  wordGroupsPromise = WordGroup.all()
 
   underlineColors = [
     '#1f77b4'
@@ -117,6 +116,7 @@ controller = ($http, $q, WordGroup, $scope) ->
       parts.push "0 #{yPosition}px 0 0 #{color}"
     parts.join(',')
   recalculateUnderlines = ->
+    return unless $scope.words and $scope.wordGroups
     wordIds = _.map $scope.words, (word) -> word.id
     $scope.underlines = {}
     for wordGroup in $scope.wordGroups
