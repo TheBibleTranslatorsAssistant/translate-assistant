@@ -30,16 +30,30 @@ body.body-extra-top-padding {
   padding-top: 75px;
 }
 
+.navbar-toggle {
+	margin-top: 21px;
+	margin-bottom: 17px;
+}
 .navbar-brand {
-	padding: 2px 0;
+	padding-top: 10px;
+	padding-bottom: 10px;
 }
 
 .jumbotron {
-	background-image: image-url("bible-on-table.jpg");
 	background-repeat: no-repeat;
-	background-size: cover;
 	background-position: center center;
+	background-size: cover;
 	width: 100%;
+}
+.index-page .jumbotron {
+	background-image: image-url("bible-on-table.jpg");
+}
+.about-page .jumbotron {
+	background-image: image-url("about.jpg");
+}
+
+.bump-down {
+	padding-top: 50px;
 }
 
 footer {
@@ -51,8 +65,8 @@ footer {
 }
 
 .footer-list li {
-	display: inline-block;
-	margin: 0 15px;
+	display: block;
+	margin: 15px 15px;
 }
 .footer-list a {
 	display: inline-block;
@@ -65,11 +79,29 @@ footer {
 .copyright {
 	margin-top: 30px;
 }
+.checkbox input[type="checkbox"] {
+	margin-left: 0;
+}
 
 @media (min-width: 768px) {
+	.navbar-brand {
+		padding: 10px 0;
+	}
+	.nav li a {
+		padding: 25px 25px;
+	}
 	.jumbotron {
 		width: auto;
+	}
+	.index-page .jumbotron {
 		min-height: 600px;
+	}
+	.about-page .jumbotron {
+		height: 400px;
+	}
+	.footer-list li {
+		display: inline-block;
+		margin-bottom: 0;
 	}
 }
 
