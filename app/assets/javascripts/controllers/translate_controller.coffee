@@ -85,7 +85,8 @@ controller = ($http, $q, WordGroup, $scope) ->
         wordGroupMax = wordIds.indexOf(wordGroup.ending_word_id)
         minBetween = selectedMin >= wordGroupMin and selectedMin <= wordGroupMax
         maxBetween = selectedMax >= wordGroupMin and selectedMax <= wordGroupMax
-        minBetween or maxBetween
+        singleWordGroup = wordGroupMin == wordGroupMax
+        !singleWordGroup and (minBetween or maxBetween)
 
   $scope.colorForWordGroup = (wordGroup) ->
     underlineColors[wordGroup.id%20]
