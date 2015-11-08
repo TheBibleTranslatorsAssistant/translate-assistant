@@ -4,10 +4,11 @@
   <div ng-controller="TranslateController">
     <div class="source-text col-lg-8 col-md-6" style="font-size: 32pt;" ng-mouseup="clearHighlight()">
       <span ng-repeat="word in words"
-            ng-class="{ 'selection-disabled': true, 'highlighted': indexIsHighlighted($index) }" 
+            ng-class="{ 'word': true, 'selection-disabled': true, 'highlighted': indexIsHighlighted($index) }" 
             ng-mousedown="startWith(word, $event)"
             ng-mousemove="endWith(word, $event)"
-            ng-mouseup="stopPropagation($event)">
+            ng-mouseup="stopPropagation($event)"
+            ng-style="{ 'box-shadow': boxShadowForWord(word) }">
         {{word.word}}
       </span>
     </div>
