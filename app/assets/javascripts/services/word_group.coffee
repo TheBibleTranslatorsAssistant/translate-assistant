@@ -11,11 +11,18 @@ factory = ($q, $http, Module, Observable) ->
         @starting_word_id = hash.starting_word_id
         @ending_word_id   = hash.ending_word_id
         @_groupType       = hash.group_type
+        @_conceptId       = hash.concept_id
 
     @property 'groupType',
       get: -> @_groupType
       set: (groupType) ->
         @_groupType = groupType
+        @save()
+
+    @property 'conceptId',
+      get: -> @_conceptId
+      set: (conceptId) ->
+        @_conceptId = conceptId
         @save()
 
     save: =>
@@ -32,6 +39,7 @@ factory = ($q, $http, Module, Observable) ->
           starting_word_id: @starting_word_id
           ending_word_id:   @ending_word_id
           group_type:       @groupType
+          concept_id:       @conceptId
       $http(request)
         .success (data, status, headers, config) =>
           _.extend @, data

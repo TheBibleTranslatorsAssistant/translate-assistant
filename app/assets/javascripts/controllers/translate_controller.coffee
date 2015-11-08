@@ -48,10 +48,13 @@ controller = ($http, $q, WordGroup, $scope) ->
     if $scope.startWordIndex != null and $scope.endWordIndex != null
       newWordGroup = new WordGroup({
         starting_word_id: $scope.words[min].id,
-        ending_word_id:   $scope.words[max].id,
-        definition_id:    if $scope.features.concept then $scope.features.concept.id else null
+        ending_word_id:   $scope.words[max].id
       })
       $scope.selectedWordGroup = wordGroupMatchingIndexes(min, max) || newWordGroup
+      if $scope.selectedWordGroup.conceptId and !conceptIdToType[$scope.selectedWordGroup.conceptId]
+        $http({ method: 'GET', url: '/concepts?id=' + $scope.selectedWordGroup.conceptId })
+          .success (response) ->
+            conceptIdToType[response.id] = response.concept_type
     else
       $scope.selectedWordGroup = null
 
@@ -165,6 +168,8 @@ controller = ($http, $q, WordGroup, $scope) ->
       endId      = wordGroup.ending_word_id
       endIndex   = wordIds.indexOf(endId)
 
+      continue if startId == endId
+      
       # Find the max index of items within (startIndex -> endIndex) so far
       maxCount = 0
       for index in [startIndex..endIndex]
@@ -184,31 +189,28 @@ controller = ($http, $q, WordGroup, $scope) ->
         $scope.underlines[word.id].push(wordGroup)
   $q.all([wordsPromise, wordGroupsPromise]).then(recalculateUnderlines)
 
+  conceptIdToType = {}
+  
   $scope.hasSelection = -> $scope.startWordIndex != null and $scope.endWordIndex != null
   $scope.definitionOptions = []
   $scope.features = 
-    concept:    null
-    searchText: null
-    plurality: null
-    tense: null
     reset: ->
-      @concept = null
       @plurality = null
       @tense = null
       @searchText = null
+      @expandSearchBox = false
   $scope.definitionIsCompleted = ->
-    $scope.features.concept != null and $scope.features.concept.id != 'other'
+    $scope.selectedWordGroup and $scope.selectedWordGroup.conceptId
   $scope.hasNounConcept = ->
-    $scope.definitionIsCompleted() and $scope.features.concept.concept_type == 'noun'
-  $scope.hasVerbConcept = -> $scope.definitionIsCompleted() and $scope.features.concept.concept_type == 'verb'
+    $scope.definitionIsCompleted() and conceptIdToType[$scope.selectedWordGroup.conceptId] == 'noun'
+  $scope.hasVerbConcept = ->
+    $scope.definitionIsCompleted() and conceptIdToType[$scope.selectedWordGroup.conceptId] == 'verb'
   $scope.searchDefinitions = ->
-    if $scope.features.searchText != null
+    if $scope.features.searchText
       loadDefinitionsForWord($scope.features.searchText)
-  $scope.shouldShowDefinitionSearchBox = ->
-    $scope.features.concept != null and $scope.features.concept.id == 'other'
   throttleSearchDefinitions =
     jQuery.throttle(250, (text) ->
-      if text != null and text != '' and text.length > 1
+      if text and text != '' and text.length > 1
         $scope.searchDefinitions())
   $scope.$watch(
     "features.searchText",
@@ -231,6 +233,7 @@ controller = ($http, $q, WordGroup, $scope) ->
       url:    '/concepts'
       params: { q: text }
     }).success (response) ->
+      _.map(response, (concept) -> conceptIdToType[concept.id] = concept.concept_type)
       $scope.definitionOptions = response
 
   # Group type

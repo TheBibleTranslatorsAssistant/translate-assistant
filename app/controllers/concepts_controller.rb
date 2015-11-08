@@ -3,7 +3,9 @@ class ConceptsController < ApplicationController
   before_filter :authenticate_user!
 
   def index
-    if params[:q]
+    if params[:id]
+      query = Concept.find(params[:id])
+    elsif params[:q]
       query = Concept.fuzzy_search(params[:q]).limit(10)
     else
       query = Concept.order(title: :asc, description: :asc).limit(10)

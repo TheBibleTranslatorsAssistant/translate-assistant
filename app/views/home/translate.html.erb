@@ -31,14 +31,14 @@
           Definition
           <span class="glyphicon glyphicon-ok" ng-show="definitionIsCompleted()"></span>
         </h3>
-        <div ng-class="{ 'searchContainer': true, 'expandedSearchBox': shouldShowDefinitionSearchBox() }" ng-show="!definitionIsCompleted()">
-          <span class="glyphicon glyphicon-search" ng-click="features.concept = { id: 'other' }"></span>
-          <input type="text" class="form-control" ng-model="features.searchText" ng-focus="features.concept = { id: 'other' }" />
+        <div ng-class="{ 'searchContainer': true, 'expandedSearchBox': features.expandSearchBox }" ng-show="!definitionIsCompleted()">
+          <span class="glyphicon glyphicon-search" ng-click="features.expandSearchBox = true"></span>
+          <input type="text" class="form-control" ng-model="features.searchText" ng-focus="features.expandSearchBox = true" />
         </div>
         <div class="radio">
           <div ng-repeat="suggestion in definitionOptions">
             <label>
-              <input type="radio" name="definition" id="definition" ng-model="features.concept" ng-value="suggestion">
+              <input type="radio" name="definition" id="definition" ng-model="selectedWordGroup.conceptId" ng-value="suggestion.id">
               {{suggestion.title}} - {{suggestion.description}}
             </label>
           </div>
