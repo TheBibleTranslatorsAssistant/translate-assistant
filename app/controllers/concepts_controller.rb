@@ -4,7 +4,7 @@ class ConceptsController < ApplicationController
 
   def index
     if params[:q]
-      query = Concept.search(params[:q])
+      query = Concept.fuzzy_search(params[:q]).limit(10)
     else
       query = Concept.order(title: :asc, description: :asc).limit(10)
     end
