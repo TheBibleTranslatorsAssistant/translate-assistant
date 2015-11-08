@@ -49,21 +49,23 @@ sections.each do |section_hash|
 end
 
 # Create some sample word groups
+all_words = Word.order('word_index ASC')
 [
   # start word_index      end word_index
-  [ 1,                    7               ],
-  [ 1,                    4               ],
-  [ 5,                    7               ],
-  [ 8,                    10              ],
-  [ 8,                    12              ],
-  [ 13,                   22              ],
-  [ 13,                   16              ],
-  [ 17,                   22              ],
-  [ 17,                   19              ],
+  [ 0,                    5               ],
+  [ 0,                    2               ],
+  [ 3,                    5               ],
+  [ 6,                    8               ],
+  [ 6,                    10              ],
+  [ 11,                   20              ],
+  [ 11,                   14              ],
+  [ 15,                   20              ],
+  [ 15,                   17              ],
+  [ 18,                   20              ],
 ].each do |start_and_end|
   start_word_index, end_word_index = start_and_end
-  start_word = Word.find_by_word_index(start_word_index)
-  end_word   = Word.find_by_word_index(end_word_index)
+  start_word = all_words[start_word_index]
+  end_word   = all_words[end_word_index]
   word_group = WordGroup.create(starting_word: start_word, ending_word: end_word)
   unless word_group.valid?
     puts "Got errors for word_group #{word_group.inspect}..."
