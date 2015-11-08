@@ -11,7 +11,7 @@
 </div>
 
 <div id="navbar" class="collapse navbar-collapse">
-  <ul class="nav navbar-nav navbar-right">
+  <ul class="nav navbar-nav">
     <li <% if @body_class == "about-page" %>class="active"<% end %>>
       <%= link_to "About", about_path %>
     </li>
@@ -19,6 +19,12 @@
     <li <% if @body_class == "works-page" %>class="active"<% end %>>
         <%= link_to "How it works", how_it_works_path, class: "active"  %>
     </li>
+  </ul>
+
+  <ul class="nav navbar-nav navbar-right">
+    <% if user_signed_in? %>
+      <li><%= link_to "Translate", translate_path %></li>
+    <% end %>
 
     <li <% if @body_class == "sign-up-page" %>class="active"<% end %>>
       <% if user_signed_in? %>
