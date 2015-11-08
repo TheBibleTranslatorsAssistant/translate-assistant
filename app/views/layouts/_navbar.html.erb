@@ -12,20 +12,20 @@
 
 <div id="navbar" class="collapse navbar-collapse">
   <ul class="nav navbar-nav navbar-right">
-    <li style="margin: 0 15px;">
+    <li>
         <%= link_to "About", about_path %>
     </li>
 
-    <li style="margin: 0 15px;">
+    <li>
         <%= link_to "How it works", how_it_works_path %>
     </li>
 
-    <li style="margin: 0 15px;">
-        <% if user_signed_in? %>
-          <%= link_to "Sign Out", destroy_user_session_path, method: :delete %>
-        <% else %>
-          <%= link_to "Sign In", new_user_session_path %>
-        <% end %>
+    <li>
+      <% if user_signed_in? %>
+        <%= link_to "Sign Out", destroy_user_session_path, method: :delete %>
+      <% else %>
+        <%= link_to "Sign In", new_user_session_path %>
+      <% end %>
     </li>
   </ul><!--/.navbar-nav -->
 </div><!--/.nav-collapse -->
