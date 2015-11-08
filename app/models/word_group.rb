@@ -12,6 +12,15 @@ class WordGroup < ActiveRecord::Base
     'Verb phrase',
     'Not sure',
   ] }, allow_nil: true
+  validates :plurality, inclusion: { in: [
+    'Singular',
+    'Plural',
+  ] }, allow_nil: true
+  validates :tense, inclusion: { in: [
+    'Past',
+    'Present',
+    'Future',
+  ] }, allow_nil: true
 
 end
 

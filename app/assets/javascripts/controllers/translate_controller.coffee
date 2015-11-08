@@ -195,8 +195,6 @@ controller = ($http, $q, WordGroup, $scope) ->
   $scope.definitionOptions = []
   $scope.features = 
     reset: ->
-      @plurality = null
-      @tense = null
       @searchText = null
       @expandSearchBox = false
   $scope.definitionIsCompleted = ->
@@ -216,16 +214,9 @@ controller = ($http, $q, WordGroup, $scope) ->
     "features.searchText",
     (newValue, oldValue) -> throttleSearchDefinitions(newValue))
   
-  $scope.pluralities = [
-    { id: 1, title: "Singular" },
-    { id: 2, title: "Plural" }
-  ]
+  $scope.pluralities = [ "Singular", "Plural" ]
   
-  $scope.tenses = [
-    { id: 1, title: "Past" },
-    { id: 2, title: "Present" },
-    { id: 3, title: "Future" }
-  ]
+  $scope.tenses = [ "Past", "Present", "Future" ]
   
   loadDefinitionsForWord = (text) ->
     $http({

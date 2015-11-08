@@ -162,7 +162,9 @@ CREATE TABLE word_groups (
     starting_word_id integer NOT NULL,
     ending_word_id integer NOT NULL,
     group_type character varying,
-    concept_id integer
+    concept_id integer,
+    plurality character varying,
+    tense character varying
 );
 
 
@@ -456,4 +458,6 @@ INSERT INTO schema_migrations (version) VALUES ('20151108172732');
 INSERT INTO schema_migrations (version) VALUES ('20151108184114');
 
 INSERT INTO schema_migrations (version) VALUES ('20151108184147');
+
+INSERT INTO schema_migrations (version) VALUES ('20151108192308');
 

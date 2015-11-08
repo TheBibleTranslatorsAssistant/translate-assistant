@@ -43,7 +43,9 @@ class WordGroupsController < ApplicationController
         :starting_word_id,
         :ending_word_id,
         :group_type,
-        :concept_id
+        :concept_id,
+        :plurality,
+        :tense
       )
   end
 
@@ -52,7 +54,9 @@ class WordGroupsController < ApplicationController
       .require(:word_group)
       .permit(
         :group_type,
-        :concept_id
+        :concept_id,
+        :plurality,
+        :tense
       )
   end
 

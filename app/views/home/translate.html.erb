@@ -60,31 +60,31 @@
         </div>
       </div>
       
-      <div ng-class="{ 'propertyPane': true, 'propertyCompleted': features.plurality != null }" ng-show="hasNounConcept()">
+      <div ng-class="{ 'propertyPane': true, 'propertyCompleted': selectedWordGroup.plurality }" ng-show="hasNounConcept()">
         <h3>
           Plurality
-          <span class="glyphicon glyphicon-ok" ng-show="features.plurality != null"></span>
+          <span class="glyphicon glyphicon-ok" ng-show="selectedWordGroup.plurality"></span>
         </h3>
         <div class="radio">
           <div ng-repeat="plurality in pluralities">
             <label>
-              <input type="radio" name="plurality" id="plurality" ng-model="features.plurality" value="{{plurality.id}}">
-              {{plurality.title}}
+              <input type="radio" name="plurality" id="plurality" ng-model="selectedWordGroup.plurality" ng-value="plurality">
+              {{plurality}}
             </label>
           </div>
         </div>
       </div>
       
-      <div ng-class="{ 'propertyPane': true, 'propertyCompleted': features.tense != null }" ng-show="hasVerbConcept()">
+      <div ng-class="{ 'propertyPane': true, 'propertyCompleted': selectedWordGroup.tense }" ng-show="hasVerbConcept()">
         <h3>
           Tense
-          <span class="glyphicon glyphicon-ok" ng-show="features.tense != null"></span>
+          <span class="glyphicon glyphicon-ok" ng-show="selectedWordGroup.tense"></span>
         </h3>
         <div class="radio">
           <div ng-repeat="tense in tenses">
             <label>
-              <input type="radio" name="tense" id="tense" ng-model="features.tense" value="{{tense.id}}">
-              {{tense.title}}
+              <input type="radio" name="tense" id="tense" ng-model="selectedWordGroup.tense" ng-value="tense">
+              {{tense}}
             </label>
           </div>
         </div>

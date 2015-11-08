@@ -12,11 +12,25 @@ factory = ($q, $http, Module, Observable) ->
         @ending_word_id   = hash.ending_word_id
         @_groupType       = hash.group_type
         @_conceptId       = hash.concept_id
+        @_plurality       = hash.plurality
+        @_tense           = hash.tense
 
     @property 'groupType',
       get: -> @_groupType
       set: (groupType) ->
         @_groupType = groupType
+        @save()
+        
+    @property 'plurality',
+      get: -> @_plurality
+      set: (plurality) ->
+        @_plurality = plurality
+        @save()
+        
+    @property 'tense',
+      get: -> @_tense
+      set: (tense) ->
+        @_tense = tense
         @save()
 
     @property 'conceptId',
@@ -26,6 +40,7 @@ factory = ($q, $http, Module, Observable) ->
         @save()
 
     save: =>
+      return if @_autoSaveDisabled
       if @id
         request =
           method: 'PUT'
@@ -40,10 +55,14 @@ factory = ($q, $http, Module, Observable) ->
           ending_word_id:   @ending_word_id
           group_type:       @groupType
           concept_id:       @conceptId
+          plurality:        @plurality
+          tense:            @tense
       $http(request)
         .success (data, status, headers, config) =>
+          @_autoSaveDisabled = true
           _.extend @, data
-
+          @_autoSaveDisabled = false
+          
           # Fetch new WordGroups from server
           setTimeout WordGroup.fetch, 0
         .error (data, status, headers, config) ->
