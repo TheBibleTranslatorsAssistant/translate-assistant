@@ -23,6 +23,8 @@ gem 'coffee-script-source', '1.8.0'
 gem 'puma'
 gem 'foreman'
 
+gem 'rails_12factor'
+
 # Use textacular for full-text postgres search
 gem 'textacular', "~> 3.0", require: 'textacular/rails'
 
