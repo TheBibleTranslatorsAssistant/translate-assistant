@@ -23,6 +23,9 @@ gem 'coffee-script-source', '1.8.0'
 gem 'puma'
 gem 'foreman'
 
+# Use textacular for full-text postgres search
+gem 'textacular', "~> 3.0", require: 'textacular/rails'
+
 # Use devise for authentication
 gem 'devise'
 
