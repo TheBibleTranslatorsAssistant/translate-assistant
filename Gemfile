@@ -19,6 +19,10 @@ gem 'coffee-script-source', '1.8.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 
+# Use puma as our webserver (so we can use websockets)
+gem 'puma'
+gem 'foreman'
+
 # Use devise for authentication
 gem 'devise'
 
