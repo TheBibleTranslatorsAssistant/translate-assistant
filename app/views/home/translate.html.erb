@@ -20,7 +20,7 @@
         </h3>
         <div ng-class="{ 'searchContainer': true, 'expandedSearchBox': shouldShowDefinitionSearchBox() }" ng-show="!definitionIsCompleted()">
           <span class="glyphicon glyphicon-search" ng-click="features.concept = { id: 'other' }"></span>
-          <input type="text" class="form-control" ng-model="features.searchText" ng-focus="features.concept = { id: 'other' }" ng-enter="searchDefinitions()" />
+          <input type="text" class="form-control" ng-model="features.searchText" ng-focus="features.concept = { id: 'other' }" />
         </div>
         <div class="radio">
           <div ng-repeat="suggestion in definitionOptions">

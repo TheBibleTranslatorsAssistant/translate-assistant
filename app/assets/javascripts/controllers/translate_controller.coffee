@@ -169,6 +169,13 @@ controller = ($http, $q, WordGroup, $scope) ->
       loadDefinitionsForWord($scope.features.searchText)
   $scope.shouldShowDefinitionSearchBox = ->
     $scope.features.concept != null and $scope.features.concept.id == 'other'
+  throttleSearchDefinitions =
+    jQuery.throttle(250, (text) ->
+      if text != null and text != '' and text.length > 1
+        $scope.searchDefinitions())
+  $scope.$watch(
+    "features.searchText",
+    (newValue, oldValue) -> throttleSearchDefinitions(newValue))
   
   $scope.pluralities = [
     { id: 1, title: "Singular" },
