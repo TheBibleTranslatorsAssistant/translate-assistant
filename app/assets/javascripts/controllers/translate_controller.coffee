@@ -31,22 +31,23 @@ controller = ($http, $q, WordGroup, $scope) ->
 
     # Find or create matching wordGroup
     if $scope.startWordIndex != null and $scope.endWordIndex != null
+      min = Math.min($scope.startWordIndex, $scope.endWordIndex)
+      max = Math.max($scope.startWordIndex, $scope.endWordIndex)
       newWordGroup = new WordGroup({
-        starting_word_id: $scope.words[$scope.startWordIndex].id,
-        ending_word_id:   $scope.words[$scope.endWordIndex].id,
+        starting_word_id: $scope.words[min].id,
+        ending_word_id:   $scope.words[max].id,
       })
-      $scope.selectedWordGroup = wordGroupMatchingIndexes(
-        $scope.startWordIndex,
-        $scope.endWordIndex
-      ) || newWordGroup
+      $scope.selectedWordGroup = wordGroupMatchingIndexes(min, max) || newWordGroup
     else
       $scope.selectedWordGroup = null
 
     $scope.selectionDidChange()
 
   wordGroupMatchingIndexes = (startWordIndex, endWordIndex) ->
-    startingId = $scope.words[$scope.startWordIndex].id
-    endingId   = $scope.words[$scope.endWordIndex].id
+    min = Math.min(startWordIndex, endWordIndex)
+    max = Math.max(startWordIndex, endWordIndex)
+    startingId = $scope.words[min].id
+    endingId   = $scope.words[max].id
     _.find $scope.wordGroups, (wg) ->
       wg.starting_word_id == startingId and wg.ending_word_id == endingId
 
