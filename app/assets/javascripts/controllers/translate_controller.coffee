@@ -5,11 +5,20 @@ controller = ($http, $scope) ->
     url:    '/words'
   }).success (response) ->
     $scope.words = response
-
+  
+  $scope.definition = { id: null, searchText: null }
+  $scope.propertyIsCompleted = ->
+    return $scope.definition.id != null and $scope.definition.id != 'other'
+  $scope.searchDefinitions = ->
+    if $scope.definition.searchText != null
+      loadDefinitionsForWord($scope.definition.searchText)
+  $scope.showDefinitionPane = false
+  
   $scope.startWordIndex = null
   $scope.startWith = (word, $event) ->
     $scope.startWordIndex = $scope.words.indexOf(word)
     $scope.endWordIndex = $scope.startWordIndex
+    $scope.definition.id = null
     $event.stopPropagation()
 
   $scope.endWordIndex = null
@@ -17,8 +26,9 @@ controller = ($http, $scope) ->
     # Don't change end word if mouse isn't pressed
     return unless $event.which == 1
     $scope.endWordIndex = $scope.words.indexOf(word)
+    $scope.showDefinitionPane = $scope.startWordIndex == $scope.endWordIndex
     $event.stopPropagation()
-
+  
   $scope.indexIsHighlighted = (index) ->
     return false if $scope.startWordIndex == null or $scope.endWordIndex == null
     min = Math.min($scope.startWordIndex, $scope.endWordIndex)
@@ -41,16 +51,16 @@ controller = ($http, $scope) ->
     # If the user selected a single word then refresh definition options
     if min == max
       selectedWord = $scope.words[min]
-      loadDefinitionsForWord(selectedWord)
+      loadDefinitionsForWord(selectedWord.word)
     else
       $scope.definitionOptions = []
-
-  loadDefinitionsForWord = (word) ->
-    console.log "fetching definitions for #{word.word}"
+  
+  loadDefinitionsForWord = (text) ->
+    console.log "fetching definitions for #{text}"
     $http({
       method: 'GET',
       url:    '/concepts'
-      params: { q: word.word }
+      params: { q: text }
     }).success (response) ->
       $scope.definitionOptions = response
 
