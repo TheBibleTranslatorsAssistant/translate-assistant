@@ -37,7 +37,7 @@ factory = ($q, $http, Module, Observable) ->
           _.extend @, data
 
           # Fetch new WordGroups from server
-          setTimeout WordGroup._fetchWordGroups, 0
+          setTimeout WordGroup.fetch, 0
         .error (data, status, headers, config) ->
           console.log "Oh no, there was an error saving the word group."
 
@@ -49,7 +49,7 @@ factory = ($q, $http, Module, Observable) ->
         $http(request)
           .error (data, status, headers, config) ->
             console.log "Oh no, there was an error deleting the word group."
-      WordGroup._fetchWordGroups()
+      WordGroup.fetch()
 
     @all: ->
       unless angular.isUndefined(WordGroup._allWordGroups)
@@ -59,9 +59,9 @@ factory = ($q, $http, Module, Observable) ->
       #  - set up an observer to track changes
       #  - fetch (and return a promise)
       WordGroup._allWordGroups = []
-      return @_fetchWordGroups()
+      return @fetch()
 
-    @_fetchWordGroups: ->
+    @fetch: ->
       promise = $http({
         method: 'GET',
         url:    '/word-groups'

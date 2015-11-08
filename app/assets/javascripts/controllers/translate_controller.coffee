@@ -112,6 +112,9 @@ controller = ($http, $q, WordGroup, $scope) ->
     recalculateUnderlines()
   wordGroupsPromise = WordGroup.all()
 
+  # Periodically update word groups
+  setInterval WordGroup.fetch, 10*1000
+
   underlineColors = [
     '#1f77b4'
     '#aec7e8'
