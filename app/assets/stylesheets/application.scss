@@ -84,6 +84,10 @@ footer {
 	margin-left: 0;
 }
 
+label.ng-binding {
+	margin: 5px 0;
+}
+
 @media (min-width: 768px) {
 	.navbar-brand {
 		padding: 10px 0;
@@ -117,6 +121,12 @@ footer {
 
 .source-text {
   text-align: justify;
+  border: 2px gray solid;
+}
+
+.pane-container {
+	border: 2px gray solid;
+	border-left: none;
 }
 
 .source-text > .highlighted {
@@ -124,6 +134,9 @@ footer {
   color: #ffffff;
 }
 
+.propertyPane {
+	border-bottom: 2px gray solid;
+}
 .propertyPane h3 {
   color: #1159b4;
 }
