@@ -220,13 +220,22 @@ controller = ($http, $q, WordGroup, $scope) ->
   $scope.tenses = [ "Past", "Present", "Future" ]
   
   loadDefinitionsForWord = (text) ->
-    $http({
-      method: 'GET',
-      url:    '/concepts'
-      params: { q: text }
-    }).success (response) ->
-      _.map(response, (concept) -> conceptIdToType[concept.id] = concept.concept_type)
-      $scope.definitionOptions = response
+    if $scope.selectedWordGroup.conceptId
+      $http({
+        method: 'GET',
+        url:    '/concepts'
+        params: { id: $scope.selectedWordGroup.conceptId }
+      }).success (response) ->
+        conceptIdToType[response.id] = response.concept_type
+        $scope.definitionOptions = [ response ]
+    else
+      $http({
+        method: 'GET',
+        url:    '/concepts'
+        params: { q: text }
+      }).success (response) ->
+        _.map(response, (concept) -> conceptIdToType[concept.id] = concept.concept_type)
+        $scope.definitionOptions = response
 
   # Group type
   $scope.showGroupType = false
