@@ -58,6 +58,7 @@ controller = ($http, $q, WordGroup, $scope) ->
     max = Math.max($scope.startWordIndex, $scope.endWordIndex)
 
     # If the user selected a single word then refresh definition options
+    updateIntersectingWordGroups()
     if min == max
       selectedWord = $scope.words[min]
       loadDefinitionsForWord(selectedWord.word)
@@ -67,6 +68,28 @@ controller = ($http, $q, WordGroup, $scope) ->
       $scope.definitionOptions = []
       $scope.showDefinitionPane = false
       $scope.showGroupTypePane = true
+
+  updateIntersectingWordGroups = ->
+    selectedMin = Math.min($scope.startWordIndex, $scope.endWordIndex)
+    selectedMax = Math.max($scope.startWordIndex, $scope.endWordIndex)
+    wordIds = _.map $scope.words, (word) -> word.id
+    $scope.intersectingWordGroups = _.filter $scope.wordGroups, (wordGroup) ->
+      wordGroupMin = wordIds.indexOf(wordGroup.starting_word_id)
+      wordGroupMax = wordIds.indexOf(wordGroup.ending_word_id)
+      minBetween = selectedMin >= wordGroupMin and selectedMin <= wordGroupMax
+      maxBetween = selectedMax >= wordGroupMin and selectedMax <= wordGroupMax
+      minBetween or maxBetween
+
+  $scope.colorForWordGroup = (wordGroup) ->
+    underlineColors[wordGroup.id%20]
+  $scope.textForWordGroup = (wordGroup) ->
+    wordIds    = _.map $scope.words, (word) -> word.id
+    startIndex = wordIds.indexOf(wordGroup.starting_word_id)
+    endIndex   = wordIds.indexOf(wordGroup.ending_word_id)
+    words      = []
+    for index in [startIndex..endIndex]
+      words.push($scope.words[index].word)
+    words.join(' ')
 
   # Load words from the server
   wordsPromise = $http({

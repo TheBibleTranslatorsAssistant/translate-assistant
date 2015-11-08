@@ -12,7 +12,15 @@
         {{word.word}}
       </span>
     </div>
-    <div class="col-lg-4 col-md-6" style="min-height:600px;">
+
+    <div class="col-lg-4 col-md-6" style="min-height:600px">
+      <div class="legend">
+        <div ng-repeat="wordGroup in intersectingWordGroups" style="text-overflow: ellipsis; height: 24px; white-space: nowrap; overflow: hidden;">
+          <span ng-style="{ 'width': '14px', 'height': '3px', 'margin': '0 4px 3px 0', 'background-color': colorForWordGroup(wordGroup), 'display': 'inline-block' }"></span>
+          {{textForWordGroup(wordGroup)}}
+        </div>
+      </div>
+
       <div ng-class="{ 'propertyPane': true, 'propertyCompleted': definitionIsCompleted() }" ng-show="showDefinitionPane">
         <h3>
           Definition
