@@ -134,8 +134,8 @@ label.ng-binding {
 
 .source-text {
   text-align: justify;
-  font-size: 24px;
-  line-height: 45px;
+  font-size: 20px;
+  line-height: 38px;
   overflow-y: scroll;
   overflow-x: hidden;
   margin: 8px 0;
@@ -163,6 +163,9 @@ label.ng-binding {
 	background-color: #fff;
 }
 
+.source-text .panel-title {
+	font-size: 30px;
+}
 
 .propertyPane .searchContainer {
   margin: 2px;
