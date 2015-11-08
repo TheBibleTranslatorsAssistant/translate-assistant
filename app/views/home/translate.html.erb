@@ -1,8 +1,8 @@
-<% @body_class = "body-white body-extra-top-padding" %>
+<% @body_class = "body-white" %>
 
 <div ng-app="translateAssistant">
   <div ng-controller="TranslateController">
-    <div class="source-text col-lg-8 col-md-6" style="font-size: 32pt;" ng-mouseup="clearHighlight()">
+    <div class="source-text col-lg-8 col-md-6" ng-mouseup="clearHighlight()">
       <span ng-repeat="word in words"
             ng-class="{ 'word': true, 'selection-disabled': true, 'highlighted': indexIsHighlighted($index) }" 
             ng-mousedown="startWith(word, $event)"
