@@ -4,7 +4,7 @@ controller = ($http, $q, WordGroup, $scope) ->
   $scope.startWith = (word, $event) ->
     $scope.startWordIndex = $scope.words.indexOf(word)
     $scope.endWordIndex = $scope.startWordIndex
-    $scope.definition.id = null
+    $scope.features.reset()
     $event.stopPropagation()
 
   $scope.endWordIndex = null
@@ -24,6 +24,7 @@ controller = ($http, $q, WordGroup, $scope) ->
     $scope.startWordIndex = null
     $scope.endWordIndex = null
     $scope.selectedWordGroup = null
+    $scope.features.reset()
 
   $scope.selectedWordGroup = null
   $scope.stopPropagation = ($event) ->
@@ -36,6 +37,7 @@ controller = ($http, $q, WordGroup, $scope) ->
       newWordGroup = new WordGroup({
         starting_word_id: $scope.words[min].id,
         ending_word_id:   $scope.words[max].id,
+        definition_id:    if $scope.features.concept then $scope.features.concept.id else null
       })
       $scope.selectedWordGroup = wordGroupMatchingIndexes(min, max) || newWordGroup
     else
@@ -146,17 +148,39 @@ controller = ($http, $q, WordGroup, $scope) ->
         $scope.underlines[word.id].push(wordGroup)
   $q.all([wordsPromise, wordGroupsPromise]).then(recalculateUnderlines)
 
+  $scope.hasSelection = -> $scope.startWordIndex != null and $scope.endWordIndex != null
   $scope.definitionOptions = []
-  $scope.definition = 
-    id:         null
+  $scope.features = 
+    concept:    null
     searchText: null
-  $scope.propertyIsCompleted = ->
-    return $scope.definition.id != null and $scope.definition.id != 'other'
+    plurality: null
+    tense: null
+    reset: ->
+      @concept = null
+      @plurality = null
+      @tense = null
+  $scope.definitionIsCompleted = ->
+    $scope.features.concept != null and $scope.features.concept.id != 'other'
+  $scope.hasNounConcept = ->
+    $scope.definitionIsCompleted() and $scope.features.concept.concept_type == 'noun'
+  $scope.hasVerbConcept = -> $scope.definitionIsCompleted() and $scope.features.concept.concept_type == 'verb'
   $scope.searchDefinitions = ->
-    if $scope.definition.searchText != null
-      loadDefinitionsForWord($scope.definition.searchText)
-  $scope.showDefinitionPane = false
-
+    if $scope.features.searchText != null
+      loadDefinitionsForWord($scope.features.searchText)
+  $scope.shouldShowDefinitionSearchBox = ->
+    $scope.features.concept != null and $scope.features.concept.id == 'other'
+  
+  $scope.pluralities = [
+    { id: 1, title: "Singular" },
+    { id: 2, title: "Plural" }
+  ]
+  
+  $scope.tenses = [
+    { id: 1, title: "Past" },
+    { id: 2, title: "Present" },
+    { id: 3, title: "Future" }
+  ]
+  
   loadDefinitionsForWord = (text) ->
     $http({
       method: 'GET',

@@ -137,4 +137,25 @@ footer {
   background-color: #1159b4;
   padding: 2px;
   border-radius: 5px;
+  position: relative;
+  width: 40px;
+}
+
+.searchContainer .form-control {
+  height: 20px;
+  padding: 2px 2px 2px 20px
+}
+
+.searchContainer input {
+  padding: 0;
+}
+
+.searchContainer.expandedSearchBox {
+  width: 100%;
+}
+
+.searchContainer .glyphicon-search {
+  position: absolute;
+  top: 5px;
+  left: 5px;
 }

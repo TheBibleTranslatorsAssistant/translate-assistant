@@ -12,49 +12,78 @@
         {{word.word}}
       </span>
     </div>
-    <div class="col-lg-4 col-md-6" style="min-height:600px">
-      <div ng-class="{ 'propertyPane': true, 'propertyCompleted': propertyIsCompleted() }" ng-show="showDefinitionPane">
-        <h3>Definition <span class="glyphicon glyphicon-ok" ng-show="propertyIsCompleted()"></span></h3>
-        <div class="searchContainer" ng-show="definition.id == 'other'">
-          <div class="has-feedback">
-            <input type="text" class="form-control" placeholder="Search definitions" ng-model="definition.searchText" ng-enter="searchDefinitions()" />
-            <span class="glyphicon glyphicon-search form-control-feedback"></span>
-          </div>
+    <div class="col-lg-4 col-md-6" style="min-height:600px;">
+      <div ng-class="{ 'propertyPane': true, 'propertyCompleted': definitionIsCompleted() }" ng-show="showDefinitionPane">
+        <h3>
+          Definition
+          <span class="glyphicon glyphicon-ok" ng-show="definitionIsCompleted()"></span>
+        </h3>
+        <div ng-class="{ 'searchContainer': true, 'expandedSearchBox': shouldShowDefinitionSearchBox() }" ng-show="!definitionIsCompleted()">
+          <span class="glyphicon glyphicon-search" ng-click="features.concept = { id: 'other' }"></span>
+          <input type="text" class="form-control" ng-model="features.searchText" ng-focus="features.concept = { id: 'other' }" ng-enter="searchDefinitions()" />
         </div>
         <div class="radio">
           <div ng-repeat="suggestion in definitionOptions">
             <label>
-              <input type="radio" name="definition" id="definition" ng-model="definition.id" value="{{suggestion.id}}">
+              <input type="radio" name="definition" id="definition" ng-model="features.concept" ng-value="suggestion">
               {{suggestion.title}} - {{suggestion.description}}
-            </label>
-          </div>
-          <div>
-            <label>
-              <input type="radio" name="definition" id="definition" ng-model="definition.id" value="other">
-              Other
             </label>
           </div>
         </div>
       </div>
 
       <div ng-class="{ 'propertyPane': true, 'propertyCompleted': selectedWordGroup.groupType }" ng-show="showGroupTypePane">
-        <h3>Type <span class="glyphicon glyphicon-ok-sign" ng-show="selectedWordGroup.groupType"></span></h3>
+        <h3>
+          Phrase Type
+          <span class="glyphicon glyphicon-ok" ng-show="selectedWordGroup.groupType"></span>
+        </h3>
         <div class="radio">
           <div ng-repeat="groupType in groupTypeOptions">
             <label>
-              <input type="radio" name="fizzBuzz" ng-model="$parent.selectedWordGroup.groupType" ng-value="groupType">
+              <input type="radio" name="phraseType" ng-model="$parent.selectedWordGroup.groupType" ng-value="groupType">
               {{groupType}}
             </label>
           </div>
         </div>
       </div>
-
+      
+      <div ng-class="{ 'propertyPane': true, 'propertyCompleted': features.plurality != null }" ng-show="hasNounConcept()">
+        <h3>
+          Plurality
+          <span class="glyphicon glyphicon-ok" ng-show="features.plurality != null"></span>
+        </h3>
+        <div class="radio">
+          <div ng-repeat="plurality in pluralities">
+            <label>
+              <input type="radio" name="plurality" id="plurality" ng-model="features.plurality" value="{{plurality.id}}">
+              {{plurality.title}}
+            </label>
+          </div>
+        </div>
+      </div>
+      
+      <div ng-class="{ 'propertyPane': true, 'propertyCompleted': features.tense != null }" ng-show="hasVerbConcept()">
+        <h3>
+          Tense
+          <span class="glyphicon glyphicon-ok" ng-show="features.tense != null"></span>
+        </h3>
+        <div class="radio">
+          <div ng-repeat="tense in tenses">
+            <label>
+              <input type="radio" name="tense" id="tense" ng-model="features.tense" value="{{tense.id}}">
+              {{tense.title}}
+            </label>
+          </div>
+        </div>
+      </div>
+      
       <div ng-class="{ 'propertyPane': true }" ng-show="selectedWordGroup.id">
         <a class="btn btn-danger" ng-click="deleteSelectedWordGroup()">
           <i class="glyphicon glyphicon-remove"></i>
           Delete
         </a>
       </div>
+      
     </div>
   </div>
 </div>
