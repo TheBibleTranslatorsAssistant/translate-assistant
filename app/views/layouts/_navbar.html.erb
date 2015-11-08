@@ -23,7 +23,8 @@
 
   <ul class="nav navbar-nav navbar-right">
     <% if user_signed_in? %>
-      <li><%= link_to "Translate", translate_path %></li>
+      <li <% if @body_class == "translate-page" %>class="active"<% end %>>
+      <%= link_to "Translate", translate_path %></li>
     <% end %>
 
     <li <% if @body_class == "sign-up-page" %>class="active"<% end %>>

@@ -17,7 +17,7 @@
 @import "bootstrap";
 @import "bootswatch/darkly/bootswatch";
 
-body.body-white {
+body.translate-page {
   background-color: #ffffff;
   color: #222;
 }
@@ -157,7 +157,7 @@ label.ng-binding {
   padding: 2px;
   border-radius: 5px;
   position: relative;
-  width: 40px;
+  width: 100%;
 }
 
 .propertyPane .btn {
@@ -166,22 +166,19 @@ label.ng-binding {
 }
 
 .searchContainer .form-control {
-  height: 20px;
-  padding: 2px 2px 2px 20px
+  height: 30px;
+  padding: 2px 2px 2px 30px
 }
 
 .searchContainer input {
   padding: 0;
 }
 
-.searchContainer.expandedSearchBox {
-  width: 100%;
-}
 
 .searchContainer .glyphicon-search {
   position: absolute;
-  top: 5px;
-  left: 5px;
+  top: 10px;
+  left: 10px;
 }
 
 .propertyPane .panel-title .glyphicon-remove {
