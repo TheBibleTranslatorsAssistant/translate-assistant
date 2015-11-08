@@ -51,7 +51,7 @@ controller = ($http, $q, WordGroup, $scope) ->
         ending_word_id:   $scope.words[max].id
       })
       $scope.selectedWordGroup = wordGroupMatchingIndexes(min, max) || newWordGroup
-      if $scope.selectedWordGroup.conceptId and !conceptIdToType[$scope.selectedWordGroup.conceptId]
+      if $scope.selectedWordGroup and $scope.selectedWordGroup.conceptId and !conceptIdToType[$scope.selectedWordGroup.conceptId]
         $http({ method: 'GET', url: '/concepts?id=' + $scope.selectedWordGroup.conceptId })
           .success (response) ->
             conceptIdToType[response.id] = response.concept_type
@@ -223,7 +223,7 @@ controller = ($http, $q, WordGroup, $scope) ->
   $scope.tenses = [ "Past", "Present", "Future" ]
   
   loadDefinitionsForWord = (text) ->
-    if $scope.selectedWordGroup.conceptId
+    if $scope.selectedWordGroup and $scope.selectedWordGroup.conceptId
       $http({
         method: 'GET',
         url:    '/concepts'
