@@ -26,7 +26,7 @@
         </div>
       </div>
 
-      <div ng-class="{ 'propertyPane': true, 'propertyCompleted': definitionIsCompleted() }" ng-show="showDefinitionPane">
+      <div ng-class="{ 'propertyPane': true, 'propertyCompleted': definitionIsCompleted() }" ng-show="showDefinitionPane()">
         <h3>
           Definition
           <span class="glyphicon glyphicon-ok" ng-show="definitionIsCompleted()"></span>
