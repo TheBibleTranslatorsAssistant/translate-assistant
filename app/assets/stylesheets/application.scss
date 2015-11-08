@@ -136,6 +136,7 @@ label.ng-binding {
 
 .propertyPane {
 	border-bottom: 2px gray solid;
+	margin-bottom: 5px;
 }
 .propertyPane h3 {
   color: #1159b4;
@@ -152,6 +153,11 @@ label.ng-binding {
   border-radius: 5px;
   position: relative;
   width: 40px;
+}
+
+.propertyPane .btn {
+	margin-top: 10px;
+	margin-bottom: 10px;
 }
 
 .searchContainer .form-control {
