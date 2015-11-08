@@ -22,29 +22,35 @@
   </head>
 
   <body <% if @body_class %>class="<%= @body_class %>"<% end %>>
-    <nav class="navbar navbar-default navbar-fixed-top">
+    <nav class="navbar navbar-default">
       <div class="container">
         <%= render partial: '/layouts/navbar' %>
       </div>
     </nav>
 
     <!-- Main jumbotron for a primary marketing message or call to action -->
-   <% if @jumbotron %><div class="jumbotron"><% end %>
-      <div class="container">
-        <%= yield %>
+    <% if content_for?(:jumbotron) %>
+      <div class="jumbotron">
+        <div class="container">
+          <%= content_for(:jumbotron) %>
+        </div>
       </div>
-    <% if @jumbotron %></div><% end %>
-
+    <% end %>
+    
     <div class="container">
-      <footer>
+      <%= yield %>
+    </div>
+
+    <footer>
+      <div class="container">
         <ul class="footer-list">
           <li><span class="glyphicon glyphicon-home"></span><a href="https://goo.gl/maps/yxCY8HG3FXS2"><span class="footer-text">32 Oak Tree Dr. New Smyrna Beach, FL 32169</span></a></li>
           <li><span class="glyphicon glyphicon-earphone"></span><a href="tel:3864024299"><span class="footer-text">386-402-4299</span></a></li>
           <li><span class="glyphicon glyphicon-envelope"></span><a href="mailto:Tod.Allman@TheBibleTranslatorsAssistant.org" class="footer-text">Tod.Allman@TheBibleTranslatorsAssistant.org</span></a></li>
         </ul>
         <p class="copyright">&copy; The Bible Translator's Assistant <%= Date.today.strftime("%Y") %></p>
-      </footer>
-    </div> <!-- /container -->
+      </div> <!-- /container -->
+    </footer>
   </body>
 </html>
 

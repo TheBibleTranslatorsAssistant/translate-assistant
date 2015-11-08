@@ -1,4 +1,5 @@
-<% @jumbotron = true %>
 <% @body_class = "works-page" %>
-<h1>How it Works</h1>
-<p class="lead">Quick sentence about how BTA works.<br> Here are some more words that sound great.</p>
+<% content_for :jumbotron do %>
+	<h1>How it Works</h1>
+	<p class="lead">Quick sentence about how BTA works.<br> Here are some more words that sound great.</p>
+<% end %>

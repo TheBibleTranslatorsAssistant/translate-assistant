@@ -1,4 +1,20 @@
-<% @jumbotron = true %>
 <% @body_class = "about-page" %>
-<h1>About</h1>
-<p class="lead">Here is a sentence about BTA<br> Here are some more words that sound great.</p>
+<% content_for :jumbotron do %>
+	<h1>About</h1>
+	<p class="lead">Here is a sentence about BTA<br> Here are some more words that sound great.</p>
+<% end %>
+
+<div class="main-content clearfix">
+	<div class="col-lg-4 col-md-4">
+		<h2>Catchy Title</h2>
+		<p>Bacon ipsum dolor amet spare ribs aliqua swine fugiat dolor anim. In consectetur tri-tip ground round. Occaecat pork chop turducken brisket ut pastrami fatback prosciutto cupim ex bacon dolore pariatur. Incididunt sirloin et in. Ullamco et aliquip shankle cillum. Fugiat shankle minim, hamburger tongue in ribeye bresaola beef ribs strip steak.</p>
+	</div>
+	<div class="col-lg-4 col-md-4">
+		<h2>Sweet Title</h2>
+		<p>Bacon ipsum dolor amet spare ribs aliqua swine fugiat dolor anim. In consectetur tri-tip ground round. Occaecat pork chop turducken brisket ut pastrami fatback prosciutto cupim ex bacon dolore pariatur. Incididunt sirloin et in. Ullamco et aliquip shankle cillum. Fugiat shankle minim, hamburger tongue in ribeye bresaola beef ribs strip steak.</p>
+	</div>
+	<div class="col-lg-4 col-md-4">
+		<h2>Awesome Title</h2>
+		<p>Bacon ipsum dolor amet spare ribs aliqua swine fugiat dolor anim. In consectetur tri-tip ground round. Occaecat pork chop turducken brisket ut pastrami fatback prosciutto cupim ex bacon dolore pariatur. Incididunt sirloin et in. Ullamco et aliquip shankle cillum. Fugiat shankle minim, hamburger tongue in ribeye bresaola beef ribs strip steak.</p>
+	</div>
+</div>
