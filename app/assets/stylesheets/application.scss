@@ -167,6 +167,10 @@ label.ng-binding {
 	font-size: 30px;
 }
 
+.propertyPane.propertyCompleted .panel-heading {
+  background-color: #339300 !important;
+}
+
 .propertyPane .searchContainer {
   margin: 2px;
   background-color: #1159b4;
