@@ -3,6 +3,11 @@
 <div ng-app="translateAssistant">
   <div ng-controller="TranslateController" tr-resize-panes>
     <div class="source-text col-lg-8 col-md-6" ng-mouseup="clearHighlight()">
+      <div class="panel panel-default">
+          <div class="panel-heading">
+          <h1 class="panel-title">Ruth 1</h1>
+          </div>
+      <div class="panel-body">
       <span ng-repeat="word in words"
             ng-class="{ 'word': true, 'selection-disabled': true, 'highlighted': indexIsHighlighted($index) }" 
             ng-mousedown="startWith(word, $event)"
@@ -11,6 +16,8 @@
             ng-style="{ 'box-shadow': boxShadowForWord(word) }">
         {{word.word}}
       </span>
+      </div>
+      </div>
     </div>
 
     <div class="col-lg-4 col-md-6 pane-container">
@@ -19,18 +26,28 @@
       </div>
 
       <div class="legend propertyPane" ng-show="intersectingWordGroups.length > 0">
-        <h3>Legend</h3>
+        <div class="panel panel-default">
+        <div class="panel-heading">
+        <h3 class="panel-title">Legend</h3>
+        </div>
+        <div class="panel-body">
         <div ng-repeat="wordGroup in intersectingWordGroups" ng-click="highlightWordGroup(wordGroup)" style="text-overflow: ellipsis; height: 24px; white-space: nowrap; overflow: hidden; cursor: pointer;">
           <span ng-style="{ 'width': '14px', 'height': '3px', 'margin': '0 4px 3px 0', 'background-color': colorForWordGroup(wordGroup), 'display': 'inline-block' }"></span>
           {{textForWordGroup(wordGroup)}}
         </div>
+        </div>
+      </div>
       </div>
 
       <div ng-class="{ 'propertyPane': true, 'propertyCompleted': definitionIsCompleted() }" ng-show="showDefinitionPane()">
-        <h3>
+        <div class="panel panel-default">
+        <div class="panel-heading">
+        <h3 class="panel-title">
           Definition
           <span class="glyphicon glyphicon-ok" ng-show="definitionIsCompleted()"></span>
         </h3>
+        </div>
+        <div class="panel-body">
         <div ng-class="{ 'searchContainer': true, 'expandedSearchBox': features.expandSearchBox }" ng-show="!definitionIsCompleted()">
           <span class="glyphicon glyphicon-search" ng-click="features.expandSearchBox = true"></span>
           <input type="text" class="form-control" ng-model="features.searchText" ng-focus="features.expandSearchBox = true" />
@@ -43,28 +60,40 @@
             </label>
           </div>
         </div>
+        </div>
+        </div>
       </div>
 
       <div ng-class="{ 'propertyPane': true, 'propertyCompleted': selectedWordGroup.groupType }" ng-show="showGroupTypePane">
-        <h3>
+        <div class="panel panel-default">
+        <div class="panel-heading">
+        <h3 class="panel-title">
           Phrase Type
           <span class="glyphicon glyphicon-ok" ng-show="selectedWordGroup.groupType"></span>
         </h3>
-        <div class="radio">
-          <div ng-repeat="groupType in groupTypeOptions">
-            <label>
-              <input type="radio" name="phraseType" ng-model="$parent.selectedWordGroup.groupType" ng-value="groupType">
-              {{groupType}}
-            </label>
+        </div>
+        <div class="panel-body">
+          <div class="radio">
+            <div ng-repeat="groupType in groupTypeOptions">
+              <label>
+                <input type="radio" name="phraseType" ng-model="$parent.selectedWordGroup.groupType" ng-value="groupType">
+                {{groupType}}
+              </label>
+            </div>
           </div>
+        </div>
         </div>
       </div>
       
       <div ng-class="{ 'propertyPane': true, 'propertyCompleted': selectedWordGroup.plurality }" ng-show="hasNounConcept()">
-        <h3>
+        <div class="panel panel-default">
+        <div class="panel-heading">
+        <h3 class="panel-title">
           Plurality
           <span class="glyphicon glyphicon-ok" ng-show="selectedWordGroup.plurality"></span>
         </h3>
+        </div>
+        <div class="panel-body">
         <div class="radio">
           <div ng-repeat="plurality in pluralities">
             <label>
@@ -72,14 +101,20 @@
               {{plurality}}
             </label>
           </div>
+          </div>
+        </div>
         </div>
       </div>
       
       <div ng-class="{ 'propertyPane': true, 'propertyCompleted': selectedWordGroup.tense }" ng-show="hasVerbConcept()">
-        <h3>
+        <div class="panel panel-info">
+        <div class="panel-heading">
+        <h3 class="panel-title">
           Tense
           <span class="glyphicon glyphicon-ok" ng-show="selectedWordGroup.tense"></span>
         </h3>
+        </div>
+        <div class="panel-body">
         <div class="radio">
           <div ng-repeat="tense in tenses">
             <label>
@@ -87,6 +122,8 @@
               {{tense}}
             </label>
           </div>
+          </div>
+        </div>
         </div>
       </div>
       

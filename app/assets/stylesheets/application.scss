@@ -48,6 +48,9 @@ body.body-white {
 .about-page .jumbotron {
 	background-image: image-url("about.jpg");
 }
+.works-page .jumbotron {
+	background-image: image-url("how-it-works.jpg");
+}
 
 .bump-down {
 	padding-top: 50px;
@@ -107,7 +110,7 @@ label.ng-binding {
 	.index-page .jumbotron {
 		min-height: 600px;
 	}
-	.about-page .jumbotron {
+	.about-page .jumbotron, .works-page .jumbotron {
 		height: 400px;
 	}
 	.footer-list li {
@@ -131,36 +134,22 @@ label.ng-binding {
 
 .source-text {
   text-align: justify;
-  border: 2px gray solid;
-  border-top: none;
   font-size: 24px;
   line-height: 45px;
   overflow-y: scroll;
   overflow-x: hidden;
 }
 
-.pane-container {
-	border: 2px gray solid;
-	border-top: none;
-	border-left: none;
-}
 
-.source-text > .highlighted {
+.source-text .highlighted {
   background-color: #1159b4;
   color: #ffffff;
 }
 
-.propertyPane {
-	border-bottom: 2px gray solid;
-	margin-bottom: 5px;
-}
-.propertyPane h3 {
-  color: #1159b4;
+.panel {
+	background-color: #fff;
 }
 
-.propertyCompleted h3 {
-  color: green;
-}
 
 .propertyPane .searchContainer {
   margin: 2px;
