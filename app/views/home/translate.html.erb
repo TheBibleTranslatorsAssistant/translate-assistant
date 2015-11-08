@@ -1,7 +1,7 @@
 <% @body_class = "body-white" %>
 
 <div ng-app="translateAssistant">
-  <div ng-controller="TranslateController">
+  <div ng-controller="TranslateController" tr-resize-panes>
     <div class="source-text col-lg-8 col-md-6" ng-mouseup="clearHighlight()">
       <span ng-repeat="word in words"
             ng-class="{ 'word': true, 'selection-disabled': true, 'highlighted': indexIsHighlighted($index) }" 
@@ -13,7 +13,7 @@
       </span>
     </div>
 
-    <div class="col-lg-4 col-md-6 pane-container" style="min-height:600px">
+    <div class="col-lg-4 col-md-6 pane-container">
       <div class="propertyPane no-selection" ng-show="startWordIndex == null || endWordIndex == null">
         <p class="help-text">Please select a word or phrase to get started.</p>
       </div>
