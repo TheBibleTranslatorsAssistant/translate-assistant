@@ -15,7 +15,7 @@
 
     <div class="col-lg-4 col-md-6" style="min-height:600px">
       <div class="legend">
-        <div ng-repeat="wordGroup in intersectingWordGroups" style="text-overflow: ellipsis; height: 24px; white-space: nowrap; overflow: hidden;">
+        <div ng-repeat="wordGroup in intersectingWordGroups" ng-click="highlightWordGroup(wordGroup)" style="text-overflow: ellipsis; height: 24px; white-space: nowrap; overflow: hidden; cursor: pointer;">
           <span ng-style="{ 'width': '14px', 'height': '3px', 'margin': '0 4px 3px 0', 'background-color': colorForWordGroup(wordGroup), 'display': 'inline-block' }"></span>
           {{textForWordGroup(wordGroup)}}
         </div>

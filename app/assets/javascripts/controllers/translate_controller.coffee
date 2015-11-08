@@ -29,20 +29,6 @@ controller = ($http, $q, WordGroup, $scope) ->
   $scope.selectedWordGroup = null
   $scope.stopPropagation = ($event) ->
     $event.stopPropagation()
-
-    # Find or create matching wordGroup
-    if $scope.startWordIndex != null and $scope.endWordIndex != null
-      min = Math.min($scope.startWordIndex, $scope.endWordIndex)
-      max = Math.max($scope.startWordIndex, $scope.endWordIndex)
-      newWordGroup = new WordGroup({
-        starting_word_id: $scope.words[min].id,
-        ending_word_id:   $scope.words[max].id,
-        definition_id:    if $scope.features.concept then $scope.features.concept.id else null
-      })
-      $scope.selectedWordGroup = wordGroupMatchingIndexes(min, max) || newWordGroup
-    else
-      $scope.selectedWordGroup = null
-
     $scope.selectionDidChange()
 
   wordGroupMatchingIndexes = (startWordIndex, endWordIndex) ->
@@ -56,6 +42,17 @@ controller = ($http, $q, WordGroup, $scope) ->
   $scope.selectionDidChange = ->
     min = Math.min($scope.startWordIndex, $scope.endWordIndex)
     max = Math.max($scope.startWordIndex, $scope.endWordIndex)
+
+    # Find or create matching wordGroup
+    if $scope.startWordIndex != null and $scope.endWordIndex != null
+      newWordGroup = new WordGroup({
+        starting_word_id: $scope.words[min].id,
+        ending_word_id:   $scope.words[max].id,
+        definition_id:    if $scope.features.concept then $scope.features.concept.id else null
+      })
+      $scope.selectedWordGroup = wordGroupMatchingIndexes(min, max) || newWordGroup
+    else
+      $scope.selectedWordGroup = null
 
     # If the user selected a single word then refresh definition options
     updateIntersectingWordGroups()
@@ -90,6 +87,12 @@ controller = ($http, $q, WordGroup, $scope) ->
     for index in [startIndex..endIndex]
       words.push($scope.words[index].word)
     words.join(' ')
+
+  $scope.highlightWordGroup = (wordGroup) ->
+    wordIds = _.map $scope.words, (word) -> word.id
+    $scope.startWordIndex = wordIds.indexOf(wordGroup.starting_word_id)
+    $scope.endWordIndex = wordIds.indexOf(wordGroup.ending_word_id)
+    $scope.selectionDidChange()
 
   # Load words from the server
   wordsPromise = $http({
