@@ -1,5 +1,7 @@
 class ConceptsController < ApplicationController
 
+  before_filter :authenticate_user!
+
   def index
     query = Concept.order(title: :asc, description: :asc).limit(10)
     if params[:q]
