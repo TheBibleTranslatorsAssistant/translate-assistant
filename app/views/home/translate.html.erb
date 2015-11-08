@@ -48,6 +48,13 @@
           </div>
         </div>
       </div>
+
+      <div ng-class="{ 'propertyPane': true }" ng-show="selectedWordGroup.id">
+        <a class="btn btn-danger" ng-click="deleteSelectedWordGroup()">
+          <i class="glyphicon glyphicon-remove"></i>
+          Delete
+        </a>
+      </div>
     </div>
   </div>
 </div>

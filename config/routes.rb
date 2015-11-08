@@ -21,7 +21,7 @@ Rails.application.routes.draw do
   resources :concepts, only: [:index], defaults: { format: 'json' }
   resources :word_groups,
     path:     'word-groups',
-    only:     [:index, :create, :update],
+    only:     [:index, :create, :update, :destroy],
     defaults: { format: 'json' }
 
   # Example resource route with options:

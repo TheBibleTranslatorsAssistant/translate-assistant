@@ -25,6 +25,15 @@ class WordGroupsController < ApplicationController
     end
   end
 
+  def destroy
+    @word_group = WordGroup.find(params[:id])
+    if @word_group.destroy
+      render json: {}
+    else
+      render json: @word_group.errors, status: :unprocessable_entity
+    end
+  end
+
   private
 
   def _create_params

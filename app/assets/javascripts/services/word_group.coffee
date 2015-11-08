@@ -41,8 +41,19 @@ factory = ($q, $http, Module, Observable) ->
         .error (data, status, headers, config) ->
           console.log "Oh no, there was an error saving the word group."
 
+    delete: =>
+      if @id
+        request =
+          method: 'DELETE'
+          url: "/word-groups/#{@id}"
+        $http(request)
+          .error (data, status, headers, config) ->
+            console.log "Oh no, there was an error deleting the word group."
+      WordGroup._fetchWordGroups()
+
     @all: ->
-      return WordGroup._allWordGroups unless angular.isUndefined(WordGroup._allWordGroups)
+      unless angular.isUndefined(WordGroup._allWordGroups)
+        return WordGroup._allWordGroups
 
       # If we haven't fetched before:
       #  - set up an observer to track changes

@@ -23,6 +23,7 @@ controller = ($http, $q, WordGroup, $scope) ->
   $scope.clearHighlight = ->
     $scope.startWordIndex = null
     $scope.endWordIndex = null
+    $scope.selectedWordGroup = null
 
   $scope.selectedWordGroup = null
   $scope.stopPropagation = ($event) ->
@@ -173,6 +174,10 @@ controller = ($http, $q, WordGroup, $scope) ->
     "Verb phrase"
     "Not sure"
   ]
+
+  $scope.deleteSelectedWordGroup = ->
+    $scope.selectedWordGroup.delete()
+    $scope.clearHighlight()
 
 angular
   .module 'translateAssistant'
