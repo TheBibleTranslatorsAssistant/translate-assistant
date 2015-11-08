@@ -102,6 +102,7 @@ controller = ($http, $q, $scope) ->
   $scope.clearHighlight = ->
     $scope.startWordIndex = null
     $scope.endWordIndex = null
+    $scope.showDefinitionPane = false
 
   $scope.stopPropagation = ($event) ->
     $event.stopPropagation()
