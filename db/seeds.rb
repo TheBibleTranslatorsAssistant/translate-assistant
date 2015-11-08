@@ -42,7 +42,32 @@ sections.each do |section_hash|
   })
   unless section.valid?
     puts "Got errors for section #{section.inspect}..."
-    concept.errors.full_messages.each do |m|
+    section.errors.full_messages.each do |m|
+      puts " - #{m}"
+    end
+  end
+end
+
+# Create some sample word groups
+[
+  # start word_index      end word_index
+  [ 1,                    7               ],
+  [ 1,                    4               ],
+  [ 5,                    7               ],
+  [ 8,                    10              ],
+  [ 8,                    12              ],
+  [ 13,                   22              ],
+  [ 13,                   16              ],
+  [ 17,                   22              ],
+  [ 17,                   19              ],
+].each do |start_and_end|
+  start_word_index, end_word_index = start_and_end
+  start_word = Word.find_by_word_index(start_word_index)
+  end_word   = Word.find_by_word_index(end_word_index)
+  word_group = WordGroup.create(starting_word: start_word, ending_word: end_word)
+  unless word_group.valid?
+    puts "Got errors for word_group #{word_group.inspect}..."
+    word_group.errors.full_messages.each do |m|
       puts " - #{m}"
     end
   end

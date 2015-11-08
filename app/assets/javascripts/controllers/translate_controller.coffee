@@ -1,19 +1,83 @@
-controller = ($http, $scope) ->
+controller = ($http, $q, $scope) ->
   # Load words from the server
-  $http({
+  wordsPromise = $http({
     method: 'GET',
     url:    '/words'
   }).success (response) ->
     $scope.words = response
   
-  $scope.definition = { id: null, searchText: null }
-  $scope.propertyIsCompleted = ->
-    return $scope.definition.id != null and $scope.definition.id != 'other'
-  $scope.searchDefinitions = ->
-    if $scope.definition.searchText != null
-      loadDefinitionsForWord($scope.definition.searchText)
-  $scope.showDefinitionPane = false
-  
+  # Load word groups from the server
+  wordGroupsPromise = $http({
+    method: 'GET',
+    url:    '/word-groups'
+  }).success (response) ->
+    $scope.wordGroups = response
+
+  underlineColors = [
+    '#1f77b4'
+    '#aec7e8'
+    '#ff7f0e'
+    '#ffbb78'
+    '#2ca02c'
+    '#98df8a'
+    '#d62728'
+    '#ff9896'
+    '#9467bd'
+    '#c5b0d5'
+    '#8c564b'
+    '#c49c94'
+    '#e377c2'
+    '#f7b6d2'
+    '#7f7f7f'
+    '#c7c7c7'
+    '#bcbd22'
+    '#dbdb8d'
+    '#17becf'
+    '#9edae5'
+  ]
+
+  UNDERLINE_WEIGHT_IN_PIXELS = 3
+  PADDING_BETWEEN_UNDERLINES_IN_PIXELS = 2
+  $scope.boxShadowForWord = (word) ->
+    return unless $scope.underlines and word.id of $scope.underlines
+    underlines = $scope.underlines[word.id]
+    parts = []
+    yPosition = 0
+    for underline in underlines
+      yPosition += PADDING_BETWEEN_UNDERLINES_IN_PIXELS
+      parts.push "0 #{yPosition}px 0 0 #ffffff"
+      yPosition += UNDERLINE_WEIGHT_IN_PIXELS
+      color = if underline then underlineColors[underline.id%20] else '#ffffff'
+      parts.push "0 #{yPosition}px 0 0 #{color}"
+    parts.join(',')
+  recalculateUnderlines = ->
+    wordIds = _.map $scope.words, (word) -> word.id
+    $scope.underlines = {}
+    for wordGroup in $scope.wordGroups
+      startId    = wordGroup.starting_word_id
+      startIndex = wordIds.indexOf(startId)
+      endId      = wordGroup.ending_word_id
+      endIndex   = wordIds.indexOf(endId)
+
+      # Find the max index of items within (startIndex -> endIndex) so far
+      maxCount = 0
+      for index in [startIndex..endIndex]
+        word = $scope.words[index]
+        if word.id of $scope.underlines
+          count = $scope.underlines[word.id].length
+        else
+          count = 0
+        maxCount = count if count > maxCount
+
+      # Add the word_group to items within (startIndex -> endIndex)
+      for index in [startIndex..endIndex]
+        word = $scope.words[index]
+        $scope.underlines[word.id] ||= []
+        while $scope.underlines[word.id].length < maxCount
+          $scope.underlines[word.id].push(null)
+        $scope.underlines[word.id].push(wordGroup)
+  $q.all([wordsPromise, wordGroupsPromise]).then(recalculateUnderlines)
+
   $scope.startWordIndex = null
   $scope.startWith = (word, $event) ->
     $scope.startWordIndex = $scope.words.indexOf(word)
@@ -55,8 +119,17 @@ controller = ($http, $scope) ->
     else
       $scope.definitionOptions = []
   
+  $scope.definition = 
+    id:         null
+    searchText: null
+  $scope.propertyIsCompleted = ->
+    return $scope.definition.id != null and $scope.definition.id != 'other'
+  $scope.searchDefinitions = ->
+    if $scope.definition.searchText != null
+      loadDefinitionsForWord($scope.definition.searchText)
+  $scope.showDefinitionPane = false
+
   loadDefinitionsForWord = (text) ->
-    console.log "fetching definitions for #{text}"
     $http({
       method: 'GET',
       url:    '/concepts'
@@ -68,6 +141,7 @@ angular
   .module 'translateAssistant'
   .controller 'TranslateController', [
     '$http'
+    '$q'
     '$scope'
     controller
   ]
