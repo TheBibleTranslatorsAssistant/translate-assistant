@@ -1,5 +1,6 @@
-<% @jumbotron = true %>
 <% @body_class = "index-page" %>
-<h1>Translate the Bible<br>Quicker and Easier</h1>
-<p class="lead">Use this awesome app to translate the bible for those who need it!<br> Here are some more words that sound great.</p>
-<a href="/users/sign_up"><button class="btn btn-info btn-lg">Get Started</button></a>
+<% content_for :jumbotron do %>
+	<h1>Translate the Bible<br>Quicker and Easier</h1>
+	<p class="lead">Use this awesome app to translate the bible for those who need it!<br> Here are some more words that sound great.</p>
+	<a href="/users/sign_up"><button class="btn btn-info btn-lg">Get Started</button></a>
+<% end %>

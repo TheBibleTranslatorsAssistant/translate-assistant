@@ -17,10 +17,6 @@
 @import "bootstrap";
 @import "bootswatch/darkly/bootswatch";
 
-body {
-  padding-top: 60px;
-  padding-bottom: 20px;
-}
 
 body.body-white {
   background-color: #ffffff;
@@ -31,6 +27,9 @@ body.body-extra-top-padding {
   padding-top: 75px;
 }
 
+.navbar {
+	margin-bottom: 0;
+}
 .navbar-toggle {
 	margin-top: 21px;
 	margin-bottom: 17px;
@@ -45,6 +44,7 @@ body.body-extra-top-padding {
 	background-position: center center;
 	background-size: cover;
 	width: 100%;
+	margin-bottom: 0;
 }
 .index-page .jumbotron {
 	background-image: image-url("bible-on-table.jpg");
@@ -56,9 +56,19 @@ body.body-extra-top-padding {
 .bump-down {
 	padding-top: 50px;
 }
+.well {
+	margin-bottom: 0;
+}
+.main-content {
+	padding-top: 20px;
+	padding-bottom: 40px;
+}
 
 footer {
 	text-align: center;
+	background-color: #464545;
+	padding-top: 20px;
+	padding-bottom: 20px;
 }
 .footer-list {
 	list-style: none;
