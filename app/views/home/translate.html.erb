@@ -2,7 +2,7 @@
 
 <div ng-app="translateAssistant">
   <div ng-controller="TranslateController" style="font-size: 32pt;">
-    <div class="source-text" style="height: 400px" ng-mouseup="clearHighlight()">
+    <div class="source-text" ng-mouseup="clearHighlight()">
       <span ng-repeat="word in words"
             ng-class="{ 'selection-disabled': true, 'highlighted': indexIsHighlighted($index) }" 
             ng-mousedown="startWith(word, $event)"
