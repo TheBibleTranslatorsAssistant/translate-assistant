@@ -28,6 +28,8 @@ gem 'devise'
 
 # Use AngularJS to make pages more interactive
 gem 'angularjs-rails'
+# Automatically include csrf token in XHRs
+gem 'angular_rails_csrf'
 
 gem 'tzinfo-data'
 

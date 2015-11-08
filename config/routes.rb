@@ -19,7 +19,10 @@ Rails.application.routes.draw do
   # Example resource route (maps HTTP verbs to controller actions automatically):
   resources :words, only: [:index], defaults: { format: 'json' }
   resources :concepts, only: [:index], defaults: { format: 'json' }
-  resources :word_groups, path: 'word-groups', only: [:index], defaults: { format: 'json' }
+  resources :word_groups,
+    path:     'word-groups',
+    only:     [:index, :create, :update],
+    defaults: { format: 'json' }
 
   # Example resource route with options:
   #   resources :products do

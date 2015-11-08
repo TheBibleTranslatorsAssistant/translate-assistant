@@ -1,4 +1,69 @@
-controller = ($http, $q, $scope) ->
+controller = ($http, $q, WordGroup, $scope) ->
+  # Selection stuff
+  $scope.startWordIndex = null
+  $scope.startWith = (word, $event) ->
+    $scope.startWordIndex = $scope.words.indexOf(word)
+    $scope.endWordIndex = $scope.startWordIndex
+    $scope.definition.id = null
+    $event.stopPropagation()
+
+  $scope.endWordIndex = null
+  $scope.endWith = (word, $event) ->
+    # Don't change end word if mouse isn't pressed
+    return unless $event.which == 1
+    $scope.endWordIndex = $scope.words.indexOf(word)
+    $event.stopPropagation()
+  
+  $scope.indexIsHighlighted = (index) ->
+    return false if $scope.startWordIndex == null or $scope.endWordIndex == null
+    min = Math.min($scope.startWordIndex, $scope.endWordIndex)
+    max = Math.max($scope.startWordIndex, $scope.endWordIndex)
+    index >= min and index <= max
+
+  $scope.clearHighlight = ->
+    $scope.startWordIndex = null
+    $scope.endWordIndex = null
+
+  $scope.selectedWordGroup = null
+  $scope.stopPropagation = ($event) ->
+    $event.stopPropagation()
+
+    # Find or create matching wordGroup
+    if $scope.startWordIndex != null and $scope.endWordIndex != null
+      newWordGroup = new WordGroup({
+        starting_word_id: $scope.words[$scope.startWordIndex].id,
+        ending_word_id:   $scope.words[$scope.endWordIndex].id,
+      })
+      $scope.selectedWordGroup = wordGroupMatchingIndexes(
+        $scope.startWordIndex,
+        $scope.endWordIndex
+      ) || newWordGroup
+    else
+      $scope.selectedWordGroup = null
+
+    $scope.selectionDidChange()
+
+  wordGroupMatchingIndexes = (startWordIndex, endWordIndex) ->
+    startingId = $scope.words[$scope.startWordIndex].id
+    endingId   = $scope.words[$scope.endWordIndex].id
+    _.find $scope.wordGroups, (wg) ->
+      wg.starting_word_id == startingId and wg.ending_word_id == endingId
+
+  $scope.selectionDidChange = ->
+    min = Math.min($scope.startWordIndex, $scope.endWordIndex)
+    max = Math.max($scope.startWordIndex, $scope.endWordIndex)
+
+    # If the user selected a single word then refresh definition options
+    if min == max
+      selectedWord = $scope.words[min]
+      loadDefinitionsForWord(selectedWord.word)
+      $scope.showDefinitionPane = true
+      $scope.showGroupTypePane = false
+    else
+      $scope.definitionOptions = []
+      $scope.showDefinitionPane = false
+      $scope.showGroupTypePane = true
+
   # Load words from the server
   wordsPromise = $http({
     method: 'GET',
@@ -11,7 +76,8 @@ controller = ($http, $q, $scope) ->
     method: 'GET',
     url:    '/word-groups'
   }).success (response) ->
-    $scope.wordGroups = response
+    $scope.wordGroups = _.map response, (wordGroupHash) ->
+      new WordGroup(wordGroupHash)
 
   underlineColors = [
     '#1f77b4'
@@ -78,48 +144,7 @@ controller = ($http, $q, $scope) ->
         $scope.underlines[word.id].push(wordGroup)
   $q.all([wordsPromise, wordGroupsPromise]).then(recalculateUnderlines)
 
-  $scope.startWordIndex = null
-  $scope.startWith = (word, $event) ->
-    $scope.startWordIndex = $scope.words.indexOf(word)
-    $scope.endWordIndex = $scope.startWordIndex
-    $scope.definition.id = null
-    $event.stopPropagation()
-
-  $scope.endWordIndex = null
-  $scope.endWith = (word, $event) ->
-    # Don't change end word if mouse isn't pressed
-    return unless $event.which == 1
-    $scope.endWordIndex = $scope.words.indexOf(word)
-    $scope.showDefinitionPane = $scope.startWordIndex == $scope.endWordIndex
-    $event.stopPropagation()
-  
-  $scope.indexIsHighlighted = (index) ->
-    return false if $scope.startWordIndex == null or $scope.endWordIndex == null
-    min = Math.min($scope.startWordIndex, $scope.endWordIndex)
-    max = Math.max($scope.startWordIndex, $scope.endWordIndex)
-    index >= min and index <= max
-
-  $scope.clearHighlight = ->
-    $scope.startWordIndex = null
-    $scope.endWordIndex = null
-    $scope.showDefinitionPane = false
-
-  $scope.stopPropagation = ($event) ->
-    $event.stopPropagation()
-    $scope.selectionDidChange()
-
   $scope.definitionOptions = []
-  $scope.selectionDidChange = ->
-    min = Math.min($scope.startWordIndex, $scope.endWordIndex)
-    max = Math.max($scope.startWordIndex, $scope.endWordIndex)
-
-    # If the user selected a single word then refresh definition options
-    if min == max
-      selectedWord = $scope.words[min]
-      loadDefinitionsForWord(selectedWord.word)
-    else
-      $scope.definitionOptions = []
-  
   $scope.definition = 
     id:         null
     searchText: null
@@ -138,11 +163,23 @@ controller = ($http, $q, $scope) ->
     }).success (response) ->
       $scope.definitionOptions = response
 
+  # Group type
+  $scope.showGroupType = false
+  $scope.groupTypeIsCompleted = ->
+    !!$scope.selectedWordGroup.groupType
+  $scope.groupTypeOptions = [
+    "Sentence"
+    "Noun phrase"
+    "Verb phrase"
+    "Not sure"
+  ]
+
 angular
   .module 'translateAssistant'
   .controller 'TranslateController', [
     '$http'
     '$q'
+    'WordGroup'
     '$scope'
     controller
   ]

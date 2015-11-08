@@ -5,6 +5,12 @@ class WordGroup < ActiveRecord::Base
 
   validates :starting_word, presence: true
   validates :ending_word,   presence: true
+  validates :group_type, inclusion: { in: [
+    'Sentence',
+    'Noun phrase',
+    'Verb phrase',
+    'Not sure',
+  ] }, allow_nil: true
 
 end
 

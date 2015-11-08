@@ -36,6 +36,18 @@
           </div>
         </div>
       </div>
+
+      <div ng-class="{ 'propertyPane': true, 'propertyCompleted': selectedWordGroup.groupType }" ng-show="showGroupTypePane">
+        <h3>Type <span class="glyphicon glyphicon-ok-sign" ng-show="selectedWordGroup.groupType"></span></h3>
+        <div class="radio">
+          <div ng-repeat="groupType in groupTypeOptions">
+            <label>
+              <input type="radio" name="fizzBuzz" ng-model="$parent.selectedWordGroup.groupType" ng-value="groupType">
+              {{groupType}}
+            </label>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
