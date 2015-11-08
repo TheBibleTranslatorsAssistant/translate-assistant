@@ -17,13 +17,17 @@
 @import "bootstrap";
 @import "bootswatch/darkly/bootswatch";
 
-body.layout-jumbotron {
-  padding-top: 50px;
+body {
+  padding-top: 60px;
   padding-bottom: 20px;
 }
-body {
-  padding-top: 75px;
 
+body.body-white {
+  background-color: #ffffff;
+}
+
+body.body-extra-top-padding {
+  padding-top: 75px;
 }
 
 .navbar-brand {

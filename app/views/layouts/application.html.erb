@@ -21,8 +21,7 @@
     <![endif]-->
   </head>
 
-  <body class="layout-jumbotron">
-
+  <body <% if @body_class %>class="<%= @body_class %>"<% end %>>
     <nav class="navbar navbar-default navbar-fixed-top">
       <div class="container">
         <%= render partial: '/layouts/navbar' %>
