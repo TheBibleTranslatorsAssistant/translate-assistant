@@ -63,15 +63,18 @@ controller = ($http, $q, WordGroup, $scope) ->
     if min == max
       selectedWord = $scope.words[min]
       loadDefinitionsForWord(selectedWord.word)
-      $scope.showGroupTypePane = false
     else
       $scope.definitionOptions = []
-      $scope.showGroupTypePane = true
 
   $scope.showDefinitionPane = ->
     return false if $scope.startWordIndex == null
     return false if $scope.endWordIndex == null
     $scope.startWordIndex == $scope.endWordIndex
+
+  $scope.showGroupTypePane = ->
+    return false if $scope.startWordIndex == null
+    return false if $scope.endWordIndex == null
+    $scope.startWordIndex != $scope.endWordIndex
 
   updateIntersectingWordGroups = ->
     if $scope.startWordIndex == null or $scope.endWordIndex == null
