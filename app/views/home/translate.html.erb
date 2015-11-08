@@ -14,6 +14,10 @@
     </div>
 
     <div class="col-lg-4 col-md-6 pane-container" style="min-height:600px">
+      <div class="propertyPane no-selection" ng-show="startWordIndex == null || endWordIndex == null">
+        <p class="help-text">Please select a word or phrase to get started.</p>
+      </div>
+
       <div class="legend propertyPane" ng-show="intersectingWordGroups.length > 0">
         <h3>Legend</h3>
         <div ng-repeat="wordGroup in intersectingWordGroups" ng-click="highlightWordGroup(wordGroup)" style="text-overflow: ellipsis; height: 24px; white-space: nowrap; overflow: hidden; cursor: pointer;">
