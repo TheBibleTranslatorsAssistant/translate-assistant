@@ -24,6 +24,7 @@ controller = ($http, $q, WordGroup, $scope) ->
     $scope.startWordIndex = null
     $scope.endWordIndex = null
     $scope.selectedWordGroup = null
+    $scope.selectionDidChange()
     $scope.features.reset()
 
   $scope.selectedWordGroup = null
@@ -67,15 +68,18 @@ controller = ($http, $q, WordGroup, $scope) ->
       $scope.showGroupTypePane = true
 
   updateIntersectingWordGroups = ->
-    selectedMin = Math.min($scope.startWordIndex, $scope.endWordIndex)
-    selectedMax = Math.max($scope.startWordIndex, $scope.endWordIndex)
-    wordIds = _.map $scope.words, (word) -> word.id
-    $scope.intersectingWordGroups = _.filter $scope.wordGroups, (wordGroup) ->
-      wordGroupMin = wordIds.indexOf(wordGroup.starting_word_id)
-      wordGroupMax = wordIds.indexOf(wordGroup.ending_word_id)
-      minBetween = selectedMin >= wordGroupMin and selectedMin <= wordGroupMax
-      maxBetween = selectedMax >= wordGroupMin and selectedMax <= wordGroupMax
-      minBetween or maxBetween
+    if $scope.startWordIndex == null or $scope.endWordIndex == null
+      $scope.intersectingWordGroups = []
+    else
+      selectedMin = Math.min($scope.startWordIndex, $scope.endWordIndex)
+      selectedMax = Math.max($scope.startWordIndex, $scope.endWordIndex)
+      wordIds = _.map $scope.words, (word) -> word.id
+      $scope.intersectingWordGroups = _.filter $scope.wordGroups, (wordGroup) ->
+        wordGroupMin = wordIds.indexOf(wordGroup.starting_word_id)
+        wordGroupMax = wordIds.indexOf(wordGroup.ending_word_id)
+        minBetween = selectedMin >= wordGroupMin and selectedMin <= wordGroupMax
+        maxBetween = selectedMax >= wordGroupMin and selectedMax <= wordGroupMax
+        minBetween or maxBetween
 
   $scope.colorForWordGroup = (wordGroup) ->
     underlineColors[wordGroup.id%20]
