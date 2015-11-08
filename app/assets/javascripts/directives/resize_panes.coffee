@@ -2,10 +2,9 @@ directive = ($window) ->
   hash =
     link: (scope, element, attrs) ->
       NAVBAR_HEIGHT = $('.navbar').outerHeight()
-      FOOTER_HEIGHT = $('footer').outerHeight()
       resize = _.throttle ->
         windowHeight = $(window).height()
-        targetHeight = windowHeight - NAVBAR_HEIGHT - FOOTER_HEIGHT
+        targetHeight = windowHeight - NAVBAR_HEIGHT
         $('.source-text').height(targetHeight)
         $('.pane-container').height(targetHeight)
       , 100
