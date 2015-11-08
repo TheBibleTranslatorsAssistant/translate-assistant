@@ -189,6 +189,7 @@ controller = ($http, $q, WordGroup, $scope) ->
       @concept = null
       @plurality = null
       @tense = null
+      @searchText = null
   $scope.definitionIsCompleted = ->
     $scope.features.concept != null and $scope.features.concept.id != 'other'
   $scope.hasNounConcept = ->

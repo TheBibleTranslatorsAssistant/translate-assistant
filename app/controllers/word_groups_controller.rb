@@ -42,14 +42,18 @@ class WordGroupsController < ApplicationController
       .permit(
         :starting_word_id,
         :ending_word_id,
-        :group_type
+        :group_type,
+        :concept_id
       )
   end
 
   def _update_params
     params
       .require(:word_group)
-      .permit(:group_type)
+      .permit(
+        :group_type,
+        :concept_id
+      )
   end
 
 end

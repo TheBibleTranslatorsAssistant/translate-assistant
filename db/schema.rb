@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151108135947) do
+ActiveRecord::Schema.define(version: 20151108172732) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -54,8 +54,10 @@ ActiveRecord::Schema.define(version: 20151108135947) do
     t.integer "starting_word_id", null: false
     t.integer "ending_word_id",   null: false
     t.string  "group_type"
+    t.integer "concept_id"
   end
 
+  add_index "word_groups", ["concept_id"], name: "index_word_groups_on_concept_id", using: :btree
   add_index "word_groups", ["ending_word_id"], name: "index_word_groups_on_ending_word_id", using: :btree
   add_index "word_groups", ["starting_word_id", "ending_word_id"], name: "index_word_groups_on_starting_word_id_and_ending_word_id", unique: true, using: :btree
   add_index "word_groups", ["starting_word_id"], name: "index_word_groups_on_starting_word_id", using: :btree
@@ -63,14 +65,12 @@ ActiveRecord::Schema.define(version: 20151108135947) do
   create_table "words", force: :cascade do |t|
     t.string  "word",                                                             null: false
     t.integer "word_index", default: "nextval('words_word_index_seq'::regclass)", null: false
-    t.integer "concept_id"
   end
 
-  add_index "words", ["concept_id"], name: "index_words_on_concept_id", using: :btree
   add_index "words", ["word_index"], name: "index_words_on_word_index", unique: true, using: :btree
 
   add_foreign_key "sections", "words"
+  add_foreign_key "word_groups", "concepts"
   add_foreign_key "word_groups", "words", column: "ending_word_id", name: "fk_word_groups_words_end"
   add_foreign_key "word_groups", "words", column: "starting_word_id", name: "fk_word_groups_words_start"
-  add_foreign_key "words", "concepts"
 end
